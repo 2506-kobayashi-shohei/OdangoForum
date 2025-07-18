@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,10 +16,34 @@ import java.util.List;
 public class UsersService {
     @Autowired
     UsersRepository usersRepository;
+    /* レコード全件取得処理 */
+    public List<UsersForm> findAllUser() {
+        List<Users> results = usersRepository.getUserAll();
+        List<UsersForm> users = setUsersForm(results);
+        return users;
+    }
+
+    /* DBから取得したデータをFormに設定 */
+    private List<UsersForm> setUsersForm(List<Users> results) {
+        List<UsersForm> users = new ArrayList<>();
+        for (int i = 0; i < results.size(); i++) {
+            UsersForm userForm = new UsersForm();
+            Users result = results.get(i);
+            userForm.setId(result.getId());
+            userForm.setAccount(result.getAccount());
+            userForm.setPassword(result.getPassword());
+            userForm.setName(result.getName());
+            userForm.setBranchId(result.getBranchId());
+            userForm.setDepartmentId(result.getDepartmentId());
+            userForm.setStoped(result.isStoped());
+            users.add(userForm);
+        }
+        return users;
+    }
 
     public UsersForm select(String account, String password) {
         /*String encPassword = CipherUtil.encrypt(password);
-        * ユーザー情報登録処理が実装できたらエンコーディングします*/
+         * ユーザー情報登録処理が実装できたらエンコーディングします*/
         List<Users> users = usersRepository.selectByAccountAndPassword(account, /*encPassword*/password);
         if(users.isEmpty()){
             return null;

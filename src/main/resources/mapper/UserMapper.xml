@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.example.odango.forum.mapper.UserMapper">
+    <resultMap id="UsersResult" type="jp.co.example.odango.forum.entity.Users">
+        <result column="id" property="id" />
+        <result column="account" property="account" />
+        <result column="name" property="name" />
+        <result column="branch_id" property="branch_id" />
+        <result column="department_id" property="department_id" />
+        <result column="is_stopped" property="is_stopped" />
+    </resultMap>
+    <select id="findAllUser" resultMap="UsersResult" parameterType="int">
+        select *
+        from users;
+        where id = #{id}
+    </select>
+</mapper>
+

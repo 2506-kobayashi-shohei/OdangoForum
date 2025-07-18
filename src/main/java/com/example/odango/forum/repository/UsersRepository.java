@@ -8,6 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface UsersRepository {
+    @Select("SELECT * FROM users")
+    public List<Users> getUserAll();
+
     @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password}")
     public List<Users> selectByAccountAndPassword(String account, String password);
 }
