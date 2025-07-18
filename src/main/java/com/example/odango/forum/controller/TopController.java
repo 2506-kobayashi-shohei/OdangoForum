@@ -37,11 +37,11 @@ public class TopController {
         // 投稿情報取得
         List<UserMessageForm> messages = messageService.findAllMessage(start, end, category);
         // コメント情報取得
-        List<UserCommentForm> comments = commentService.findAllComment();
+        // List<UserCommentForm> comments = commentService.findAllComment();
 
         mav.setViewName("/top");
         mav.addObject("messages",messages);
-        mav.addObject("comments",comments);
+        //mav.addObject("comments",comments);
         mav.addObject("button",button);
         return mav;
     }

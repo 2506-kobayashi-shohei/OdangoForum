@@ -35,7 +35,7 @@ public class UsersService {
             userForm.setName(result.getName());
             userForm.setBranchId(result.getBranchId());
             userForm.setDepartmentId(result.getDepartmentId());
-            userForm.setStoped(result.isStoped());
+            userForm.setStopped(result.isStopped());
             users.add(userForm);
         }
         return users;
@@ -59,7 +59,7 @@ public class UsersService {
         userForm.setName(user.getName());
         userForm.setBranchId(user.getBranchId());
         userForm.setDepartmentId(user.getDepartmentId());
-        userForm.setStoped(user.isStoped());
+        userForm.setStopped(user.isStopped());
         userForm.setCreatedDate(user.getCreatedDate());
         userForm.setUpdatedDate(user.getUpdatedDate());
         return userForm;

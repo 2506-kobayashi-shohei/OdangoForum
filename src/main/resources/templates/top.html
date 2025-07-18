@@ -63,27 +63,27 @@
                 <input class="delete" type="submit" value="削除"/>
             </form>
         </div>
-        <div class="comments" th:each="comment:${comments}" th:if="${comment.message_id == message.id}">
-            <div class="text">
-                <span th:text="${comment.text}"></span>
-            </div>
-            <div class="name">
-                <span th:text="${comment.name}"></span>
-            </div>
-            <div class="delete-button">
-                <form th:action="@{/Forum/deleteComment/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == comment.user_id}">
-                    <input class="delete" type="submit" value="削除"/>
-                </form>
-            </div>
-        </div>
-        <div class="comment">
-            <form method="post" action="/Forum/Comment" th:object="${commentForm}">
-                <label>コメント投稿</label>
-                <textarea class="Comment-box" name="text" th:text="${commentForm.text}" ></textarea><br/>
-                <input type="hidden" th:value="${message.id}" name="messageId"/>
-                <input type="submit" value="コメント"/>
-            </form>
-        </div>
+<!--        <div class="comments" th:each="comment:${comments}" th:if="${comment.message_id == message.id}">-->
+<!--            <div class="text">-->
+<!--                <span th:text="${comment.text}"></span>-->
+<!--            </div>-->
+<!--            <div class="name">-->
+<!--                <span th:text="${comment.name}"></span>-->
+<!--            </div>-->
+<!--            <div class="delete-button">-->
+<!--                <form th:action="@{/Forum/deleteComment/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == comment.user_id}">-->
+<!--                    <input class="delete" type="submit" value="削除"/>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="comment">-->
+<!--            <form method="post" action="/Forum/Comment" th:object="${commentForm}">-->
+<!--                <label>コメント投稿</label>-->
+<!--                <textarea class="Comment-box" name="text" th:text="${commentForm.text}" ></textarea><br/>-->
+<!--                <input type="hidden" th:value="${message.id}" name="messageId"/>-->
+<!--                <input type="submit" value="コメント"/>-->
+<!--            </form>-->
+<!--        </div>-->
     </div>
 </div>
 </body>

@@ -19,12 +19,11 @@ public class UserManageController {
     @Autowired
     HttpSession session;
 
-
-    @RequestMapping(value = "/Forum/userManage", method = RequestMethod.GET)
+    @RequestMapping("/Forum/management")
     public ModelAndView userManage() {
         ModelAndView mav = new ModelAndView();
         List<UsersForm> userData = userService.findAllUser();
-        mav.setViewName("/userManage");
+        mav.setViewName("/management");
         mav.addObject("users", userData);
         return mav;
     }

@@ -10,11 +10,9 @@ public class LogoutController {
     @Autowired
     HttpSession session;
 
-    @GetMapping("/Forum/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        //session.getAttribute("loginUser", user);
-        // セッションを無効にする
-        HttpSession session = request.getSession(false);
+        session.getAttribute("loginUser");
         if (session != null) {
             session.invalidate();
         }
