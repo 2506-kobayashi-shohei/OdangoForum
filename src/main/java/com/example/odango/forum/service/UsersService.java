@@ -3,7 +3,6 @@ package com.example.odango.forum.service;
 import com.example.odango.forum.controller.form.UsersForm;
 import com.example.odango.forum.repository.Entity.Users;
 import com.example.odango.forum.repository.UsersRepository;
-import com.example.odango.forum.utils.CipherUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
