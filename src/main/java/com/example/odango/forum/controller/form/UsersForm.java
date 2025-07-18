@@ -18,7 +18,7 @@ public class UsersForm {
     private String name;
     private int branchId;
     private int departmentId;
-    private boolean isStoped;
+    private boolean isStopped;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 }
