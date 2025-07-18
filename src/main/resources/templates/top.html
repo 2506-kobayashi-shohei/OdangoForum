@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ホーム画面</title>
 </head>
 <body>
+<div class="header-contents">
+    <h1>匿名掲示板</h1>
+</div>
+<div class="button-contents">
+    <nav>
+        <ul>
+            <li>
+                <a href="/Forum/new">
+                    <button class="new-button" type="button">新規投稿</button>
+                </a>
+            </li>
+            <li th:if="${button}">
+                <a href="/Forum/management">
+                    <button class="management-button" type="button">ユーザ管理</button>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <button class="new-button" type="button">ログアウト</button>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="main-contents">
+    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+        <span th:text="${errorMessage}"></span>
+    </div>
 
+    <div class="conditions">
+        <form action="/Forum/">
+            期限<input type="date" name="start" th:value="${start}"> ～ <input type="date" name="end" th:value="${end}">
+            カテゴリー<input type="text" name="category" th:value="${category}">
+            <input type="submit" value="絞込"/>
+        </form>
+    </div>
+
+    <div class="messages" th:each="message:${messages}">
+        <div class="title">
+            <span th:text="${message.title}"></span>
+        </div>
+        <div class="text">
+            <span th:text="${message.text}"></span>
+        </div>
+        <div class="category">
+            <span th:text="${message.category}"></span>
+        </div>
+        <div class="created_date">
+            <span th:text="${message.created_date}"></span>
+        </div>
+        <div class="name">
+            <span th:text="${message.name}"></span>
+        </div>
+        <div class="delete-button">
+            <form th:action="@{/Forum/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.user_id}">
+                <input class="delete" type="submit" value="削除"/>
+            </form>
+        </div>
+        <div class="comments" th:each="comment:${comments}" th:if="${comment.message_id == message.id}">
+            <div class="text">
+                <span th:text="${comment.text}"></span>
+            </div>
+            <div class="name">
+                <span th:text="${comment.name}"></span>
+            </div>
+            <div class="delete-button">
+                <form th:action="@{/Forum/deleteComment/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == comment.user_id}">
+                    <input class="delete" type="submit" value="削除"/>
+                </form>
+            </div>
+        </div>
+        <div class="comment">
+            <form method="post" action="/Forum/Comment" th:object="${commentForm}">
+                <label>コメント投稿</label>
+                <textarea class="Comment-box" name="text" th:text="${commentForm.text}" ></textarea><br/>
+                <input type="hidden" th:value="${message.id}" name="messageId"/>
+                <input type="submit" value="コメント"/>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
