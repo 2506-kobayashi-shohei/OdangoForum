@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>ログイン</title>
+</head>
+<body>
+<div class="header-contents">
+    <h2>ログイン</h2>
+</div>
+<div class="main-contents">
+    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <form action="/Forum/tryLogin" method="post" th:object="${loginModel}">
+        <div class="form-area">
+            <label>アカウント</label>
+            <input	th:name="account" type="text" th:value="*{account}"/> <br />
+            <label>パスワード</label>
+            <input th:name="password" type="password" th:value="*{password}"/> <br />
+            <!--バリデーションに引っかからないようにするために、「氏名」「支社ID」「部署ID」を一時的に設定-->
+            <input type="hidden" name="name" value="temporaryName">
+            <input type="hidden" name="branchId" value="1">
+            <input type="hidden" name="departmentId" value="1">
+            <input type="submit" value="ログイン" /> <br />
+        </div>
+    </form>
+</div>
+<div class="footer-contents">
+    <form action="/Forum">
+        <input type="submit" value="戻る"/>
+    </form>
+</div>
+</body>
+</html>
