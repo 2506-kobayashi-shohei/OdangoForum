@@ -53,6 +53,16 @@ public class TopController {
         mav.addObject("comments", comments);
         mav.addObject("commentForm", commentForm);
         mav.addObject("button", button);
+        setErrorMessage(mav);
         return mav;
     }
+    /* 管理者権限フィルターのエラーメッセージ取得 */
+    private void setErrorMessage(ModelAndView mav) {
+        if (session.getAttribute("errorMessages") != null) {
+            mav.addObject("errorMessages", session.getAttribute("errorMessages"));
+            // sessionの破棄
+            session.removeAttribute("errorMessages");
+        }
+    }
+
 }
