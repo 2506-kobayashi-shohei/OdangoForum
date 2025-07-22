@@ -41,11 +41,11 @@ public class UserManageController {
         return map;
     }
 
-    /* ユーザー復活・停止(実装中) */
+    /* ユーザー復活・停止 */
     @PutMapping("/Forum/changeStatus/{id}")
     public ModelAndView changeStatus(@PathVariable Integer id, @RequestParam(name = "status", required = false) boolean status) {
         userService.changeStatus(id, status);
-        return new ModelAndView("redirect:/management");
+        return new ModelAndView("redirect:/Forum/management");
     }
 
 }
