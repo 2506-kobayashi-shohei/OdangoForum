@@ -38,4 +38,27 @@ public class UserService {
         userForm.setUpdatedDate(user.getUpdatedDate());
         return userForm;
     }
+
+    public void insert(UserForm userForm){
+        User user = setUserEntity(userForm);
+        userRepository.insert(user);
+    }
+    private User setUserEntity(UserForm userForm){
+        User user =new User();
+        user.setId(userForm.getId());
+        user.setAccount(userForm.getAccount());
+        user.setPassword(userForm.getPassword());
+        user.setName(userForm.getName());
+        user.setBranchId(userForm.getBranchId());
+        user.setDepartmentId(userForm.getDepartmentId());
+        user.setStopped(userForm.isStopped());
+        user.setCreatedDate(userForm.getCreatedDate());
+        user.setUpdatedDate(userForm.getUpdatedDate());
+        return user;
+    }
+
+    public boolean isUnique(String account){
+        List<User> users = userRepository.findByAccount(account);
+        return users.isEmpty();
+    }
 }
