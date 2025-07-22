@@ -14,7 +14,6 @@ public interface UserRepository {
             "INNER JOIN Departments d ON u.department_id = d.id")
     public List<UserManage> findAll();
 
-
     @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password}")
     public List<User> selectByAccountAndPassword(String account, String password);
 
@@ -25,8 +24,14 @@ public interface UserRepository {
             "VALUES(#{account}, #{password}, #{name}, #{branchId}, #{departmentId})")
     public void insert(User user);
 
-    /* ユーザー復活・停止(実装中) */
-    @Update("UPDATE  users " +
+    /* 編集画面でユーザー情報取得 */
+    @Select("SELECT u.id, u.account, u.password, u.name, " +
+            "u.branch_id as branchId, u.department_id as departmentId, u.is_stopped as isStopped " +
+            "FROM Users u WHERE id = 1")
+    public List<User> findById(int id);
+
+    /* ユーザー復活・停止 */
+    @Update("UPDATE users " +
             "SET is_stopped = #{status}, updated_date = CURRENT_TIMESTAMP " +
             "WHERE id = #{id}")
     void updateStatusById(Integer id, boolean status);

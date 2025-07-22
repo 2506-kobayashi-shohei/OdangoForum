@@ -22,7 +22,7 @@ public class UserForm {
     private String confirmPassword;
     /*パスワードと確認用パスワードの一致判定メソッド
      * @Validated によって@AssertTrueがついたメソッドを呼び出すことができる*/
-    @AssertTrue(message = "パスワードと確認用パスワードが一致しません")
+    //@AssertTrue(message = "パスワードと確認用パスワードが一致しません")
     public boolean isPasswordValid() {
         return password.equals(confirmPassword);
     }
