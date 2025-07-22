@@ -34,7 +34,7 @@ public class UsersService {
         userForm.setName(user.getName());
         userForm.setBranchId(user.getBranchId());
         userForm.setDepartmentId(user.getDepartmentId());
-        userForm.setStoped(user.isStoped());
+        userForm.setStopped(user.isStopped());
         userForm.setCreatedDate(user.getCreatedDate());
         userForm.setUpdatedDate(user.getUpdatedDate());
         return userForm;

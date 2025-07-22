@@ -1,8 +1,8 @@
 package com.example.odango.forum.service;
 
 import com.example.odango.forum.controller.form.UserMessageForm;
-import com.example.odango.forum.mapper.UserMessageMapper;
 import com.example.odango.forum.repository.Entity.UserMessage;
+import com.example.odango.forum.repository.UserMessageRepository;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class MessageService {
     @Autowired
-    UserMessageMapper userMessageMapper;
+    UserMessageRepository userMessageRepository;
 
     // レコード取得処理
     public List<UserMessageForm> findAllMessage(LocalDateTime start, LocalDateTime end, String category){
@@ -36,10 +36,10 @@ public class MessageService {
         }
 
         if(!StringUtils.isEmpty(category)) {
-            List<UserMessage> messages = userMessageMapper.selectByCategory(startDate, endDate, category, limit);
+            List<UserMessage> messages = userMessageRepository.selectByCategory(startDate, endDate, category, limit);
             return setUserMessageForm(messages);
         }else {
-            List<UserMessage> messages = userMessageMapper.selectAll(startDate, endDate, limit);
+            List<UserMessage> messages = userMessageRepository.selectAll(startDate, endDate, limit);
             return setUserMessageForm(messages);
         }
     }
