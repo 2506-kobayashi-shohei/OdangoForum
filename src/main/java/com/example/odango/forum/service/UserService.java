@@ -68,7 +68,7 @@ public class UserService {
         return userForm;
     }
 
-    /* ステータス変更処理(実装中) */
+    /* ステータス変更処理 */
     public void changeStatus(Integer id, boolean status) {
         userRepository.updateStatusById(id, status);
     }
