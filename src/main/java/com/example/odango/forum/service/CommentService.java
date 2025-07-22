@@ -60,4 +60,9 @@ public class CommentService {
         comment.setUpdatedDate(comment.getUpdatedDate());
         return comment;
     }
+
+    // コメント削除処理
+    public void deleteComment(Integer id){
+        commentRepository.delete(id);
+    }
 }

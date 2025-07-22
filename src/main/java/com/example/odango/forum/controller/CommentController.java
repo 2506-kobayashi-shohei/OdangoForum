@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,6 +48,14 @@ public class CommentController {
 
         // コメント登録処理
         commentService.saveComment(commentForm);
+
+        return new ModelAndView("redirect:/Forum");
+    }
+
+    @DeleteMapping("/Forum/deleteComment/{id}")
+    public ModelAndView deleteComment(@PathVariable Integer id){
+        // コメント削除処理
+        commentService.deleteComment(id);
 
         return new ModelAndView("redirect:/Forum");
     }

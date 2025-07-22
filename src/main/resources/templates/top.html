@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ホーム画面</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script th:src="@{/js/delete.js}"></script>
 </head>
 <body>
 <div class="header-contents">
@@ -71,7 +73,7 @@
                 <span th:text="${comment.name}"></span>
             </div>
             <div class="delete-button">
-                <form th:action="@{/Forum/deleteComment/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id} == ${comment.userId}">
+                <form th:action="@{/Forum/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id} == ${comment.userId}">
                     <input class="delete" type="submit" value="削除"/>
                 </form>
             </div>
