@@ -1,8 +1,10 @@
 package com.example.odango.forum.service;
 
-import com.example.odango.forum.controller.form.UsersForm;
-import com.example.odango.forum.repository.Entity.Users;
-import com.example.odango.forum.repository.UsersRepository;
+import com.example.odango.forum.controller.form.UserManageForm;
+import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.repository.Entity.UserManage;
+import com.example.odango.forum.repository.Entity.User;
+import com.example.odango.forum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,46 +14,48 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UsersService {
+public class UserService {
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
+
     /* レコード全件取得処理 */
-    public List<UsersForm> findAllUser() {
-        List<Users> results = usersRepository.getUserAll();
-        List<UsersForm> users = setUsersForm(results);
+    public List<UserManageForm> findAllUser() {
+        List<UserManage> results = userRepository.findAll();
+        List<UserManageForm> users = setUsersForm(results);
         return users;
     }
 
     /* DBから取得したデータをFormに設定 */
-    private List<UsersForm> setUsersForm(List<Users> results) {
-        List<UsersForm> users = new ArrayList<>();
+    private List<UserManageForm> setUsersForm(List<UserManage> results) {
+        List<UserManageForm> users = new ArrayList<>();
         for (int i = 0; i < results.size(); i++) {
-            UsersForm userForm = new UsersForm();
-            Users result = results.get(i);
+            UserManageForm userForm = new UserManageForm();
+            UserManage result = results.get(i);
             userForm.setId(result.getId());
             userForm.setAccount(result.getAccount());
-            userForm.setPassword(result.getPassword());
             userForm.setName(result.getName());
             userForm.setBranchId(result.getBranchId());
             userForm.setDepartmentId(result.getDepartmentId());
+            userForm.setBranchName(result.getBranchName());
+            userForm.setDepartmentName(result.getDepartmentName());
             userForm.setStopped(result.isStopped());
             users.add(userForm);
         }
         return users;
     }
 
-    public UsersForm select(String account, String password) {
+    public UserForm select(String account, String password) {
         /*String encPassword = CipherUtil.encrypt(password);
          * ユーザー情報登録処理が実装できたらエンコーディングします*/
-        List<Users> users = usersRepository.selectByAccountAndPassword(account, /*encPassword*/password);
+        List<User> users = userRepository.selectByAccountAndPassword(account, /*encPassword*/password);
         if(users.isEmpty()){
             return null;
         }
         return setUsersForm(users.get(0));
     }
 
-    private UsersForm setUsersForm(Users user) {
-        UsersForm userForm = new UsersForm();
+    private UserForm setUsersForm(User user) {
+        UserForm userForm = new UserForm();
         userForm.setId(user.getId());
         userForm.setAccount(user.getAccount());
         userForm.setPassword(user.getPassword());
@@ -62,5 +66,10 @@ public class UsersService {
         userForm.setCreatedDate(user.getCreatedDate());
         userForm.setUpdatedDate(user.getUpdatedDate());
         return userForm;
+    }
+
+    /* ステータス変更処理(実装中) */
+    public void changeStatus(Integer id, boolean status) {
+        userRepository.updateStatusById(id, status);
     }
 }

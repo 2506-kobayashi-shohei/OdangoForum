@@ -8,66 +8,75 @@
     <title>ユーザー管理</title>
 </head>
 <body>
-<div class="header-contents">
-    <h1>ユーザー管理</h1>
-</div>
-
-<div class="main-contents">
-    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
-        <span th:text="${errorMessage}"></span>
+    <div class="header-contents">
+        <h1>ユーザー管理</h1>
     </div>
 
-    <div class="new-user-button">
-        <form th:action="@{/Forum/management/new}" >
-            <input type="submit" value="新規ユーザー登録"/>
-        </form>
-    </div>
-
-    <div class="users">
-        <div class="Columns">
-            <div class="account">アカウント</div>
-            <div class="name">名前</div>
-            <div class="branch">支社名</div>
-            <div class="department">部署名</div>
-            <div class="is-stopped">ユーザー停止状態</div>
+    <div class="main-contents">
+        <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+            <span th:text="${errorMessage}"></span>
         </div>
-        <div class="user-icon" th:each="user : ${users}">
-            <div class="account">
-                <span th:text="${user.account}"></span>
-            </div>
 
-            <div class="name">
-                <span th:text="${user.name}"></span>
-            </div>
-
-<!--            <div class="branch">-->
-<!--                <span th:text="${user.branchId}"></span>-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; ? &ndash;&gt;-->
-<!--            <div class="department">-->
-<!--                <span th:text="${user.departmentId}"></span>-->
-<!--            </div>-->
-
-<!--            <div class="is-stopped">-->
-<!--                <form th:action="@{/Forum/changeStatus/{id}(id=${user.id})}" th:method="put">-->
-<!--                    <select name="status">-->
-<!--                        <option value="1" th:selected="${user.isStopped == true}">稼働</option>-->
-<!--                        <option value="2" th:selected="${user.isStopped == false}">停止</option>-->
-<!--                    </select>-->
-<!--                    <input type="hidden" name="userId" th:value="${user.id}">-->
-<!--                    <input class="change" type="submit" value="変更"/>-->
-<!--                </form>-->
-            </div>
-
-            <div class="edit-button">
-                <form th:action="@{/Forum/management/edit/{id}(id=${user.id})}" >
-                    <input type="submit" value="編集"/>
-                </form>
-            </div>
+        <div class="new-user-button">
+            <a th:href="@{/Forum/management/new}">
+                <input type="submit" value="新規ユーザー登録"/>
+            </a>
         </div>
-        <script th:src="@{/js/script.js}"></script>
+
+        <div class="users">
+            <div class="Columns">
+                <div class="account">アカウント</div>
+                <div class="name">名前</div>
+                <div class="branch">支社名</div>
+                <div class="department">部署名</div>
+                <div class="is-stopped">ユーザー停止状態</div>
+            </div>
+
+            <div class="user-icon" th:each="user : ${users}">
+                <div class="account">
+                    <span th:text="${user.account}"></span>
+                </div>
+
+                <div class="name">
+                    <span th:text="${user.name}"></span>
+                </div>
+
+                <div class="branch">
+                    <span th:text="${user.branchName}"></span>
+                </div>
+
+                <div class="department">
+                    <span th:text="${user.departmentName}"></span>
+                </div>
+
+                <div class="is-stopped">
+                    <form th:action="@{/Forum/changeStatus/{id}(id=${user.id})}" th:method="put">
+                        <select name="status">
+                            <option  th:each="map : ${changeStatus}"
+                                     th:value="${map.key}"
+                                     th:text="${map.value}"
+                                     th:selected="${map.key == user.isStopped}">
+                            </option>
+                        </select>
+                        <input type="hidden" name="userId" th:value="${user.id}">
+                        <input class="change" type="submit" value="変更"/>
+                    </form>
+                </div>
+
+                <div class="edit-button">
+                    <a th:href="@{/Forum/management/edit/{id}(id=${user.id})}">
+                        <input type="submit" value="編集"/>
+                    </a>
+                </div>
+            </div>
+            <script th:src="@{/js/script.js}"></script>
+        </div>
     </div>
-</div>
+
+    <div class="footer-contents">
+        <a th:href="@{/Forum}">
+            <input type="submit" value="戻る"/>
+        </a>
+    </div>
 </body>
 </html>

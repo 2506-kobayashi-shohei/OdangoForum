@@ -1,7 +1,7 @@
 package com.example.odango.forum.controller;
 
-import com.example.odango.forum.controller.form.UsersForm;
-import com.example.odango.forum.service.UsersService;
+import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,21 +19,21 @@ import java.util.List;
 @Controller
 public class LoginController {
     @Autowired
-    UsersService usersService;
+    UserService userService;
     @Autowired
     HttpSession session;
 
     @GetMapping("/Forum/login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
-        UsersForm user = new UsersForm();
+        UserForm user = new UserForm();
         mav.setViewName("/login");
         mav.addObject("loginModel", user);
         return mav;
     }
 
     @PostMapping("/Forum/tryLogin")
-    public ModelAndView tryLogin(@Validated @ModelAttribute("loginModel") UsersForm userForm,
+    public ModelAndView tryLogin(@Validated @ModelAttribute("loginModel") UserForm userForm,
                                  BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<String> messages = new ArrayList<>();
@@ -45,7 +45,7 @@ public class LoginController {
             mav.setViewName("/login");
             return mav;
         }
-        UsersForm user = usersService.select(userForm.getAccount(),userForm.getPassword());
+        UserForm user = userService.select(userForm.getAccount(),userForm.getPassword());
         if(user == null){
             messages.add("ログインに失敗しました");
             mav.addObject("errorMessages", messages);

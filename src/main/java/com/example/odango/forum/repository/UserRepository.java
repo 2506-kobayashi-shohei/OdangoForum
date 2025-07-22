@@ -1,0 +1,28 @@
+package com.example.odango.forum.repository;
+
+import com.example.odango.forum.repository.Entity.UserManage;
+import com.example.odango.forum.repository.Entity.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
+
+@Mapper
+public interface UserRepository {
+    @Select("SELECT u.id, u.account, u.name, u.branch_id as branchId, u.department_id as departmentId, u.is_stopped as isStopped, " +
+            "b.name as branchName, d.name as departmentName " +
+            "FROM Users u INNER JOIN Branches b ON u.branch_id = b.id " +
+            "INNER JOIN Departments d ON u.department_id = d.id")
+    public List<UserManage> findAll();
+
+
+    @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password}")
+    public List<User> selectByAccountAndPassword(String account, String password);
+
+    /* ユーザー復活・停止(実装中) */
+    @Update("UPDATE  users " +
+            "SET is_stopped = #{status}, updated_date = CURRENT_TIMESTAMP " +
+            "WHERE id = #{id}")
+    void updateStatusById(Integer id, boolean status);
+}

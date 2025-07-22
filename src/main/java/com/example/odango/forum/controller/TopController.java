@@ -1,7 +1,7 @@
 package com.example.odango.forum.controller;
 
 import com.example.odango.forum.controller.form.UserMessageForm;
-import com.example.odango.forum.controller.form.UsersForm;
+import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.MessageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TopController {
                             @RequestParam(name = "category", required = false) String category){
         ModelAndView mav = new ModelAndView();
         boolean button = false; // ボタン表示フラグ
-        UsersForm loginUser = (UsersForm)session.getAttribute("loginUser");
+        UserForm loginUser = (UserForm)session.getAttribute("loginUser");
 
         // ログインユーザ情報チェック
         if (loginUser.getDepartmentId() == 1){
@@ -37,7 +37,7 @@ public class TopController {
         // 投稿情報取得
         List<UserMessageForm> messages = messageService.findAllMessage(start, end, category);
         // コメント情報取得
-        // List<UserCommentForm> comments = commentService.findAllComment();
+        //List<UserCommentForm> comments = commentService.findAllComment();
 
         mav.setViewName("/top");
         mav.addObject("messages",messages);

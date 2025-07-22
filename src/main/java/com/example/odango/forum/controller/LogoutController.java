@@ -1,7 +1,5 @@
 package com.example.odango.forum.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +9,11 @@ public class LogoutController {
     HttpSession session;
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout() {
         session.getAttribute("loginUser");
         if (session != null) {
             session.invalidate();
         }
-        return "redirect:/";
+        return "redirect:/Forum/login";
     }
 }
