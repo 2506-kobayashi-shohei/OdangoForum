@@ -24,12 +24,13 @@
                 </a>
             </li>
             <li>
-                <a href="/logout">
-                    <button class="new-button" type="button">ログアウト</button>
-                </a>
+                <form action="/logout" method="get">
+                    <input type="submit" value="ログアウト" />
+                </form>
             </li>
         </ul>
     </nav>
+
 </div>
 <div class="main-contents">
     <div class="errorMessages" th:each="errorMessage : ${errorMessages}">

@@ -29,6 +29,8 @@ public class LoginController {
         UserForm user = new UserForm();
         mav.setViewName("/login");
         mav.addObject("loginModel", user);
+        // ログインフィルターのエラーメッセージ取得
+        setErrorMessage(mav);
         return mav;
     }
 
@@ -54,5 +56,22 @@ public class LoginController {
         }
         session.setAttribute("loginUser", user);
         return new ModelAndView("redirect:/Forum");
+    }
+
+    /* ログアウト */
+    @GetMapping("/logout")
+    public ModelAndView logout() {
+        // セッションの破棄
+        session.invalidate();
+        return new ModelAndView("redirect:/Forum/login");
+    }
+
+    /* ログインフィルターのエラーメッセージ取得 */
+    private void setErrorMessage(ModelAndView mav) {
+        if (session.getAttribute("errorMessages") != null) {
+            mav.addObject("errorMessages", session.getAttribute("errorMessages"));
+            // sessionの破棄
+            session.removeAttribute("errorMessages");
+        }
     }
 }
