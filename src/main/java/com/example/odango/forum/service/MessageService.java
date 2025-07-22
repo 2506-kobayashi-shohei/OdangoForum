@@ -8,6 +8,7 @@ import com.example.odango.forum.repository.Entity.User;
 import com.example.odango.forum.repository.MessageRepository;
 import com.example.odango.forum.repository.UserMessageRepository;
 import com.example.odango.forum.repository.Entity.UserMessage;
+import com.example.odango.forum.repository.UserMessageRepository;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
