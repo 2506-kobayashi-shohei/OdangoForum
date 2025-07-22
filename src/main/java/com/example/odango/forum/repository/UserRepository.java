@@ -2,9 +2,7 @@ package com.example.odango.forum.repository;
 
 import com.example.odango.forum.repository.Entity.UserManage;
 import com.example.odango.forum.repository.Entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,6 +17,13 @@ public interface UserRepository {
 
     @Select("SELECT * FROM users WHERE account = #{account} AND password = #{password}")
     public List<User> selectByAccountAndPassword(String account, String password);
+
+    @Select("SELECT * FROM users WHERE account = #{account}")
+    public List<User> findByAccount(String account);
+
+    @Insert("INSERT INTO users(account, password, name, branch_id, department_id) " +
+            "VALUES(#{account}, #{password}, #{name}, #{branchId}, #{departmentId})")
+    public void insert(User user);
 
     /* ユーザー復活・停止(実装中) */
     @Update("UPDATE  users " +
