@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ホーム画面</title>
+    <link th:href="@{/css/top.css}" rel="styleSheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script th:src="@{/js/delete.js}"></script>
 </head>
@@ -10,27 +11,21 @@
 <div class="header-contents">
     <h1>掲示板</h1>
 </div>
-<div class="button-contents">
+<header>
     <nav>
         <ul>
             <li>
-                <a href="/Forum/new">
-                    <button class="new-button" type="button">新規投稿</button>
-                </a>
+                <a href="/Forum/new">新規投稿</a>
             </li>
             <li th:if="${button}">
-                <a href="/Forum/management">
-                    <button class="management-button" type="button">ユーザ管理</button>
-                </a>
+                <a href="/Forum/management">ユーザ管理</a>
             </li>
             <li>
-                <a href="/logout">
-                    <button class="new-button" type="button">ログアウト</button>
-                </a>
+                <a href="/logout">ログアウト</a>
             </li>
         </ul>
     </nav>
-</div>
+</header>
 <div class="main-contents">
     <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
         <span th:text="${errorMessage}"></span>
@@ -38,38 +33,38 @@
 
     <div class="conditions">
         <form action="/Forum" method="get">
-            期限<input type="date" name="start" th:value="${start}"> ～ <input type="date" name="end" th:value="${end}">
-            カテゴリー<input type="text" name="category" th:value="${category}">
+            期限：<input type="date" name="start" th:value="${start}"> ～ <input class="end" type="date" name="end" th:value="${end}">
+            カテゴリー：<input type="text" name="category" th:value="${category}">
             <input type="submit" value="絞込"/>
         </form>
     </div>
 
+    <h3>投稿</h3>
+
     <div class="messages" th:each="message:${messages}">
-        <div class="title">
+        <h4>
             <span th:text="${message.title}"></span>
-        </div>
+        </h4>
         <div class="text">
-            <span th:text="${message.text}"></span>
+            <pre><span th:text="${message.text}"></span></pre>
         </div>
-        <div class="category">
-            <span th:text="${message.category}"></span>
+        <div class="message-profile">
+            カテゴリー：<span th:text="${message.category}"></span>
+            投稿日時：<span th:text="${#temporals.format(message.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            投稿者：<span th:text="${message.name}"></span>
         </div>
-        <div class="created_date">
-            <span th:text="${message.createdDate}"></span>
-        </div>
-        <div class="name">
-            <span th:text="${message.name}"></span>
-        </div>
+
         <div class="delete-button">
             <form th:action="@{/Forum/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id} == ${message.userId}">
                 <input class="delete" type="submit" value="削除"/>
             </form>
         </div>
+
         <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId} == ${message.id}">
             <div class="text">
-                <span th:text="${comment.text}"></span>
+                <pre><span th:text="${comment.text}"></span></pre>
             </div>
-            <div class="name">
+            <div class="comment-user-name">
                 <span th:text="${comment.name}"></span>
             </div>
             <div class="delete-button">
@@ -83,7 +78,7 @@
                 <label>コメント投稿</label>
                 <textarea class="Comment-box" name="text" th:text="${commentForm.text}" ></textarea><br/>
                 <input type="hidden" th:value="${message.id}" name="messageId"/>
-                <input type="submit" value="コメント"/>
+                <input class="comment-button" type="submit" value="コメント"/>
             </form>
         </div>
     </div>
