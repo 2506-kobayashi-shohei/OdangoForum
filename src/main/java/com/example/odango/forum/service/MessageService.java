@@ -1,8 +1,10 @@
 package com.example.odango.forum.service;
 
 import com.example.odango.forum.controller.form.MessageForm;
+import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.controller.form.UserMessageForm;
 import com.example.odango.forum.repository.Entity.Message;
+import com.example.odango.forum.repository.Entity.User;
 import com.example.odango.forum.repository.MessageRepository;
 import com.example.odango.forum.repository.UserMessageRepository;
 import com.example.odango.forum.repository.Entity.UserMessage;
@@ -95,5 +97,29 @@ public class MessageService {
         message.setCreatedDate(reqMessage.getCreatedDate());
         message.setUpdatedDate(reqMessage.getUpdatedDate());
         return message;
+    }
+    /*レコード１件取得（削除用）*/
+    public MessageForm findMessage(Integer id){
+        List<Message> message = messageRepository.findMessage(id);
+        if(message.isEmpty()){
+            return null;
+        }
+        return setMessageForm(message.get(0));
+    }
+    /*取得したEntityをFormに詰め替え*/
+    private MessageForm setMessageForm(Message message) {
+        MessageForm messageForm = new MessageForm();
+        messageForm.setId(message.getId());
+        messageForm.setTitle(message.getTitle());
+        messageForm.setText(message.getText());
+        messageForm.setCategory(message.getCategory());
+        messageForm.setUserId(message.getUserId());
+        messageForm.setCreatedDate(message.getCreatedDate());
+        messageForm.setUpdatedDate(message.getUpdatedDate());
+        return messageForm;
+    }
+    /*削除処理*/
+    public void delete(Integer id){
+        messageRepository.delete(id);
     }
 }
