@@ -7,14 +7,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class Users {
+public class Message {
     private int id;
-    private String account;
-    private String password;
-    private String name;
-    private int branchId;
-    private int departmentId;
-    private boolean isStopped;
+    private String title;
+    private String text;
+    private String category;
+    private int userId;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 }

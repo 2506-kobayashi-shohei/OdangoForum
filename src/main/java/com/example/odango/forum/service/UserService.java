@@ -1,9 +1,8 @@
 package com.example.odango.forum.service;
 
-import com.example.odango.forum.controller.form.UsersForm;
-import com.example.odango.forum.repository.Entity.Users;
-import com.example.odango.forum.repository.UsersRepository;
-import com.example.odango.forum.utils.CipherUtil;
+import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.repository.Entity.User;
+import com.example.odango.forum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,22 +11,22 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UsersService {
+public class UserService {
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
-    public UsersForm select(String account, String password) {
+    public UserForm select(String account, String password) {
         /*String encPassword = CipherUtil.encrypt(password);
         * ユーザー情報登録処理が実装できたらエンコーディングします*/
-        List<Users> users = usersRepository.selectByAccountAndPassword(account, /*encPassword*/password);
+        List<User> users = userRepository.selectByAccountAndPassword(account, /*encPassword*/password);
         if(users.isEmpty()){
             return null;
         }
         return setUsersForm(users.get(0));
     }
 
-    private UsersForm setUsersForm(Users user) {
-        UsersForm userForm = new UsersForm();
+    private UserForm setUsersForm(User user) {
+        UserForm userForm = new UserForm();
         userForm.setId(user.getId());
         userForm.setAccount(user.getAccount());
         userForm.setPassword(user.getPassword());

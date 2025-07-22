@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="header-contents">
-    <h1>匿名掲示板</h1>
+    <h1>掲示板</h1>
 </div>
 <div class="button-contents">
     <nav>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="conditions">
-        <form action="/Forum/">
+        <form action="/Forum" method="get">
             期限<input type="date" name="start" th:value="${start}"> ～ <input type="date" name="end" th:value="${end}">
             カテゴリー<input type="text" name="category" th:value="${category}">
             <input type="submit" value="絞込"/>
@@ -53,17 +53,17 @@
             <span th:text="${message.category}"></span>
         </div>
         <div class="created_date">
-            <span th:text="${message.created_date}"></span>
+            <span th:text="${message.createdDate}"></span>
         </div>
         <div class="name">
             <span th:text="${message.name}"></span>
         </div>
         <div class="delete-button">
-            <form th:action="@{/Forum/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.user_id}">
+            <form th:action="@{/Forum/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id} == ${message.userId}">
                 <input class="delete" type="submit" value="削除"/>
             </form>
         </div>
-        <div class="comments" th:each="comment:${comments}" th:if="${comment.message_id == message.id}">
+        <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId} == ${message.id}">
             <div class="text">
                 <span th:text="${comment.text}"></span>
             </div>
@@ -71,7 +71,7 @@
                 <span th:text="${comment.name}"></span>
             </div>
             <div class="delete-button">
-                <form th:action="@{/Forum/deleteComment/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == comment.user_id}">
+                <form th:action="@{/Forum/deleteComment/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id} == ${comment.userId}">
                     <input class="delete" type="submit" value="削除"/>
                 </form>
             </div>

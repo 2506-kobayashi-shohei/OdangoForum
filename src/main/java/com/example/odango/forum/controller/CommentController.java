@@ -1,7 +1,7 @@
 package com.example.odango.forum.controller;
 
 import com.example.odango.forum.controller.form.CommentForm;
-import com.example.odango.forum.controller.form.UsersForm;
+import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.CommentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @GetMapping("/Forum/addComment")
+    @PostMapping("/Forum/Comment")
     public ModelAndView addComment(@ModelAttribute("commentForm") @Validated CommentForm commentForm,
                                    BindingResult result){
         ModelAndView mav = new ModelAndView();
@@ -41,7 +41,7 @@ public class CommentController {
         }
 
         // ユーザID取得
-        UsersForm loginUser = (UsersForm)session.getAttribute("loginUser");
+        UserForm loginUser = (UserForm)session.getAttribute("loginUser");
         commentForm.setUserId(loginUser.getId());
 
         // コメント登録処理
