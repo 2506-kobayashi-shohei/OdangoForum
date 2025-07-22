@@ -43,4 +43,15 @@ public class MessageController {
         // rootへリダイレクト
         return new ModelAndView("redirect:/Forum");
     }
+    /*削除処理*/
+    @DeleteMapping("/Forum/deleteMessage/{id}")
+    public ModelAndView deleteMessage(@PathVariable Integer id){
+        MessageForm message = messageService.findMessage(id);
+        UserForm user = (UserForm) session.getAttribute("loginUser");
+        if(user.getId() != message.getUserId()){
+            return new ModelAndView("redirect:/Forum");
+        }
+        messageService.delete(id);
+        return new ModelAndView("redirect:/Forum");
+    }
 }
