@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class MessagesForm {
+public class MessageForm {
     private int id;
     @NotBlank(message = "件名を入力してください")
     private String title;
