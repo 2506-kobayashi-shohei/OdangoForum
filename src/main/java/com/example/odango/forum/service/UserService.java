@@ -46,7 +46,7 @@ public class UserService {
 
     public UserForm select(String account, String password) {
         /*String encPassword = CipherUtil.encrypt(password);
-         * ユーザー情報登録処理が実装できたらエンコーディングします*/
+        * ユーザー情報登録処理が実装できたらエンコーディングします*/
         List<User> users = userRepository.selectByAccountAndPassword(account, /*encPassword*/password);
         if(users.isEmpty()){
             return null;

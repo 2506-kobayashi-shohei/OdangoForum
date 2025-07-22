@@ -1,7 +1,10 @@
 package com.example.odango.forum.controller;
 
+import com.example.odango.forum.controller.form.CommentForm;
+import com.example.odango.forum.controller.form.UserCommentForm;
 import com.example.odango.forum.controller.form.UserMessageForm;
 import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.service.CommentService;
 import com.example.odango.forum.service.MessageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -21,28 +24,35 @@ public class TopController {
     @Autowired
     MessageService messageService;
 
+    @Autowired
+    CommentService commentService;
+
     @GetMapping("/Forum")
-    public ModelAndView top(@RequestParam(name = "start", required = false) LocalDateTime start,
-                            @RequestParam(name = "end", required = false) LocalDateTime end,
-                            @RequestParam(name = "category", required = false) String category){
+    public ModelAndView top(@RequestParam(name = "start", required = false) LocalDate start,
+                            @RequestParam(name = "end", required = false) LocalDate end,
+                            @RequestParam(name = "category", required = false) String category) {
         ModelAndView mav = new ModelAndView();
         boolean button = false; // ボタン表示フラグ
-        UserForm loginUser = (UserForm)session.getAttribute("loginUser");
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
 
         // ログインユーザ情報チェック
-        if (loginUser.getDepartmentId() == 1){
+        if (loginUser.getDepartmentId() == 1) {
             button = true;
         }
 
         // 投稿情報取得
         List<UserMessageForm> messages = messageService.findAllMessage(start, end, category);
         // コメント情報取得
-        //List<UserCommentForm> comments = commentService.findAllComment();
-
+        List<UserCommentForm> comments = commentService.findAllComment();
+        CommentForm commentForm = new CommentForm();
         mav.setViewName("/top");
-        mav.addObject("messages",messages);
-        //mav.addObject("comments",comments);
-        mav.addObject("button",button);
+        mav.addObject("start", start);
+        mav.addObject("end", end);
+        mav.addObject("loginUser", loginUser);
+        mav.addObject("messages", messages);
+        mav.addObject("comments", comments);
+        mav.addObject("commentForm", commentForm);
+        mav.addObject("button", button);
         return mav;
     }
 }

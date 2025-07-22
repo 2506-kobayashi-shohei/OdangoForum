@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class Messages {
+public class Message {
     private int id;
     private String title;
     private String text;
