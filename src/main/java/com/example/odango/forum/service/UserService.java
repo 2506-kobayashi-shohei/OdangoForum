@@ -86,8 +86,13 @@ public class UserService {
         return user;
     }
 
-    public boolean isUnique(String account){
+    public boolean isUnique(String account, Integer id){
         List<User> users = userRepository.findByAccount(account);
+
+        if(id == users.get(0).getId()){
+            return true;
+        }
+
         return users.isEmpty();
     }
 
@@ -130,6 +135,7 @@ public class UserService {
     // アカウント編集処理
     public void update(UserForm userForm){
         User updateUser = setUserEntity(userForm);
+
         userRepository.update(updateUser);
     }
 }
