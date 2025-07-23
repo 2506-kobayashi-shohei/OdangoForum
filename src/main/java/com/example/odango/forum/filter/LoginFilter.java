@@ -11,7 +11,6 @@ public class LoginFilter implements Filter {
     @Autowired
     HttpSession httpSession;
 
-    //１．セッションからログインユーザ情報を取得する。
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,

@@ -1,5 +1,6 @@
 package com.example.odango.forum.controller;
 
+import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.controller.form.UserManageForm;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class UserManageController {
     public ModelAndView userManage() {
         ModelAndView mav = new ModelAndView();
         List<UserManageForm> userData = userService.findAllUser();
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
         mav.setViewName("/management");
+        mav.addObject("loginUser", loginUser);
         mav.addObject("users", userData);
         mav.addObject("changeStatus", status());
         setErrorMessage(mav);

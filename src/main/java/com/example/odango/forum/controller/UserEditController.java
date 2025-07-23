@@ -39,7 +39,7 @@ public class UserEditController {
         }
 
         if (user == null) {
-            session.setAttribute("errorMessages", "不正なパラメータです");
+            session.setAttribute("errorMessages", "不正なパラメータが入力されました");
             return new ModelAndView("redirect:/Forum/management");
         }
 
