@@ -5,19 +5,27 @@ import com.example.odango.forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
 
 @Controller
 public class UserEditController {
     @Autowired
-    UserService userService;
+    HttpSession session;
 
     @Autowired
-    HttpSession session;
+    UserService userService;
 
     /* 編集画面表示 */
     @GetMapping({"/Forum/management/edit","/Forum/management/edit/","/Forum/management/edit/{id}"})
@@ -57,5 +65,38 @@ public class UserEditController {
             // sessionの破棄
             session.removeAttribute("errorMessages");
         }
+    }
+
+    @PutMapping("/Forum/management/update/{id}")
+    public ModelAndView updateUser(@PathVariable Integer id,
+                                   @Validated @ModelAttribute("editModel") UserForm userForm,
+                                   BindingResult result){
+        ModelAndView mav = new ModelAndView();
+        List<String> errorMessages = new ArrayList<>();
+
+        // エラー処理
+        if (result.hasErrors()){
+            for (FieldError error : result.getFieldErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            mav.addObject("errorMessages", errorMessages);
+            mav.addObject("formModel", userForm);
+            mav.setViewName("/userEdit");
+            return mav;
+        }
+
+        // アカウント重複チェック
+        if (!userService.isUnique(userForm.getAccount())){
+            errorMessages.add("アカウントが重複しています");
+            mav.addObject("errorMessages", errorMessages);
+            mav.addObject("formModel", userForm);
+            mav.setViewName("/userEdit");
+            return mav;
+        }
+
+        // アカウント編集処理
+        userService.update(userForm);
+
+        return new ModelAndView("redirect:/Forum/management");
     }
 }

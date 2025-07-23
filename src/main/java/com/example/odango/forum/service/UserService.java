@@ -126,4 +126,10 @@ public class UserService {
     public void changeStatus(Integer id, boolean status) {
         userRepository.updateStatusById(id, status);
     }
+
+    // アカウント編集処理
+    public void update(UserForm userForm){
+        User updateUser = setUserEntity(userForm);
+        userRepository.update(updateUser);
+    }
 }

@@ -15,7 +15,7 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
-    <form method="post" action="/Forum/management/update" th:object="${formModel}">
+    <form th:method="put" th:action="@{/Forum/management/update/{id}(id=${formModel.id})}" th:object="${formModel}">
         <div class="form-area">
             <label>アカウント</label>
             <span th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="error"></span>
