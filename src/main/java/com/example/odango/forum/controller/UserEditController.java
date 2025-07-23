@@ -69,7 +69,8 @@ public class UserEditController {
 
     @PutMapping("/Forum/management/update/{id}")
     public ModelAndView updateUser(@PathVariable Integer id,
-                                   @Validated @ModelAttribute("editModel") UserForm userForm,
+                                   @Validated(ValidationGroup.Edit.class)
+                                   @ModelAttribute("editModel") UserForm userForm,
                                    BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
@@ -86,7 +87,7 @@ public class UserEditController {
         }
 
         // アカウント重複チェック
-        if (!userService.isUnique(userForm.getAccount())){
+        if (!userService.isUsersEmpty(userForm.getAccount())){
             errorMessages.add("アカウントが重複しています");
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("formModel", userForm);

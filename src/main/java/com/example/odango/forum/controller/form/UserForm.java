@@ -36,8 +36,11 @@ public class UserForm {
     public boolean isPasswordValid() {
         if (!StringUtils.isBlank(password) && !StringUtils.isBlank(confirmPassword)) {
             return password.equals(confirmPassword);
+        } else if (StringUtils.isBlank(password) && StringUtils.isBlank(confirmPassword)) {
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @NotBlank(message = "氏名を入力してください",
@@ -61,10 +64,10 @@ public class UserForm {
             return true;
         }
         Map<Integer, List<Integer>> combination = new HashMap<Integer, List<Integer>>();
-        combination.put(1, List.of(1, 2));/*本社：総務人事部、情報管理部*/
-        combination.put(2, List.of(3, 4));/*A社；営業部、技術部*/
-        combination.put(3, List.of(3, 4));/*B社；営業部、技術部*/
-        combination.put(4, List.of(3, 4));/*C社；営業部、技術部*/
+        combination.put(1, List.of(1, 2));/*本社(1)：総務人事部(1)、情報管理部(2)*/
+        combination.put(2, List.of(3, 4));/*A社(2)；営業部(3)、技術部(4)*/
+        combination.put(3, List.of(3, 4));/*B社(3)；営業部(3)、技術部(4)*/
+        combination.put(4, List.of(3, 4));/*C社(4)；営業部(3)、技術部(4)*/
         return combination.get(branchId).contains(departmentId);
     }
 
