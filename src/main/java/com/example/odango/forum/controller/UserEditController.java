@@ -86,7 +86,7 @@ public class UserEditController {
         }
 
         // アカウント重複チェック
-        if (!userService.isUnique(userForm.getAccount())){
+        if (!userService.isUnique(userForm.getAccount(), id)){
             errorMessages.add("アカウントが重複しています");
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("formModel", userForm);

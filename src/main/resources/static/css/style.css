@@ -70,3 +70,9 @@ pre {
 .errorMessages {
     color: red;
 }
+
+.tweet-box {
+    margin: 5px 0px;
+	width: 780px;
+	height: 56px;
+}
