@@ -52,6 +52,8 @@ public class UserEditController {
         }
 
         ModelAndView mav = new ModelAndView();
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        mav.addObject("loginUser", loginUser);
         mav.addObject("formModel", user);
         setErrorMessage(mav);
         mav.setViewName("/userEdit");
@@ -69,7 +71,8 @@ public class UserEditController {
 
     @PutMapping("/Forum/management/update/{id}")
     public ModelAndView updateUser(@PathVariable Integer id,
-                                   @Validated @ModelAttribute("editModel") UserForm userForm,
+                                   @Validated(ValidationGroup.Edit.class)
+                                   @ModelAttribute("editModel") UserForm userForm,
                                    BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();

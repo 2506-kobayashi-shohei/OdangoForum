@@ -3,6 +3,7 @@ package com.example.odango.forum.controller;
 import com.example.odango.forum.controller.form.MessageForm;
 import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.MessageService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,13 +46,23 @@ public class MessageController {
     }
     /*削除処理*/
     @DeleteMapping("/Forum/deleteMessage/{id}")
-    public ModelAndView deleteMessage(@PathVariable Integer id){
+    public ModelAndView deleteMessage(@PathVariable String strId){
+        ModelAndView mav = new ModelAndView();
+        if(StringUtils.isBlank(strId) || !strId.matches("^[0-9]+$")){
+            mav.addObject("errorMessages", "不正なパラメータが入力されました");
+            mav.setViewName("redirect:/Forum");
+            return mav;
+        }
+        int id = Integer.parseInt(strId);
         MessageForm message = messageService.findMessage(id);
         UserForm user = (UserForm) session.getAttribute("loginUser");
-        if(user.getId() != message.getUserId()){
-            return new ModelAndView("redirect:/Forum");
+        if(message == null || user.getId() != message.getUserId()){
+            mav.addObject("errorMessages", "不正なパラメータが入力されました");
+            mav.setViewName("redirect:/Forum");
+            return mav;
         }
         messageService.delete(id);
-        return new ModelAndView("redirect:/Forum");
+        mav.setViewName("redirect:/Forum");
+        return mav;
     }
 }

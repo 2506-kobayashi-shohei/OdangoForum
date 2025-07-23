@@ -46,9 +46,9 @@ public class UserService {
 
     public UserForm select(String account, String password) {
         /*String encPassword = CipherUtil.encrypt(password);
-        * ユーザー情報登録処理が実装できたらエンコーディングします*/
+         * ユーザー情報登録処理が実装できたらエンコーディングします*/
         List<User> users = userRepository.selectByAccountAndPassword(account, /*encPassword*/password);
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             return null;
         }
         return setUsersForm(users.get(0));
@@ -68,12 +68,13 @@ public class UserService {
         return userForm;
     }
 
-    public void insert(UserForm userForm){
+    public void insert(UserForm userForm) {
         User user = setUserEntity(userForm);
         userRepository.insert(user);
     }
-    private User setUserEntity(UserForm userForm){
-        User user =new User();
+
+    private User setUserEntity(UserForm userForm) {
+        User user = new User();
         user.setId(userForm.getId());
         user.setAccount(userForm.getAccount());
         user.setPassword(userForm.getPassword());
@@ -135,7 +136,6 @@ public class UserService {
     // アカウント編集処理
     public void update(UserForm userForm){
         User updateUser = setUserEntity(userForm);
-
         userRepository.update(updateUser);
     }
 }

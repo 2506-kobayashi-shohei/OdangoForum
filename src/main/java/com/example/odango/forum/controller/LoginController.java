@@ -35,11 +35,12 @@ public class LoginController {
     }
 
     @PostMapping("/Forum/tryLogin")
-    public ModelAndView tryLogin(@Validated @ModelAttribute("loginModel") UserForm userForm,
+    public ModelAndView tryLogin(@Validated(ValidationGroup.Login.class)
+                                 @ModelAttribute("loginModel") UserForm userForm,
                                  BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<String> messages = new ArrayList<>();
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {
                 messages.add(error.getDefaultMessage());
             }
@@ -47,8 +48,8 @@ public class LoginController {
             mav.setViewName("/login");
             return mav;
         }
-        UserForm user = userService.select(userForm.getAccount(),userForm.getPassword());
-        if(user == null){
+        UserForm user = userService.select(userForm.getAccount(), userForm.getPassword());
+        if (user == null) {
             messages.add("ログインに失敗しました");
             mav.addObject("errorMessages", messages);
             mav.setViewName("/login");

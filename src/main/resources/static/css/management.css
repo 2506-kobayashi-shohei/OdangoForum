@@ -1,0 +1,77 @@
+.header-contents {
+	margin-left: 20px;
+}
+
+.main-contents {
+	margin: 20px;
+	padding: 10px 10px 5px 10px;
+	height: 100%;
+	width: 80%;
+}
+
+.footer-contents {
+	margin-left: 20px;
+}
+
+.account{
+    width:15%;
+    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.name{
+    width:15%;
+    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.branch{
+    width:15%;
+    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.is-stopped{
+    width:15%;
+    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.department{
+    width:15%;
+    display:inline-block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.login-user-status {
+    font-size:14px;
+}
+
+.edit-button{
+    display:inline-block;
+    width:5%;
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-right:10px;
+    margin-left:5px;
+}
+
+.Columns{
+    padding-top:10px;
+    font-size:15px;
+    font-weight:bold;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break:break-all;
+}
+
+.errorMessages {
+    color: red;
+}

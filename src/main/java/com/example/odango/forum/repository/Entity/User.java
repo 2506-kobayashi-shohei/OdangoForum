@@ -12,8 +12,8 @@ public class User {
     private String account;
     private String password;
     private String name;
-    private int branchId;
-    private int departmentId;
+    private Integer branchId;
+    private Integer departmentId;
     private boolean isStopped;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
