@@ -82,6 +82,9 @@ public class UserEditController {
             for (FieldError error : result.getFieldErrors()) {
                 errorMessages.add(error.getDefaultMessage());
             }
+            // ユーザー編集画面にログインユーザー情報を加えたため追記
+            UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+            mav.addObject("loginUser", loginUser);
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("formModel", userForm);
             mav.setViewName("/userEdit");
