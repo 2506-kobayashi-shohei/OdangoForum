@@ -10,9 +10,6 @@
   <h2>新規ユーザー登録</h2>
 </div>
 <div class="main-contents">
-  <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
-    <span th:text="${errorMessage}"></span>
-  </div>
   <form method="post" action="/Forum/management/signUp" th:object="${formModel}">
     <div class="form-area">
       <label>アカウント</label>
@@ -22,13 +19,12 @@
       <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
       <input type="password" th:field="*{password}"/></textarea><br/>
       <label>パスワード（確認用）</label>
-      <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error"></span>
       <input type="password" th:field="*{confirmPassword}"><br/>
+      <span th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}" class="error"></span>
       <label>氏名</label>
       <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
       <input type="text" th:field="*{name}"><br/>
       <label>支社</label>
-      <span th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="error"></span>
       <select name="branchId" th:field="*{branchId}">
         <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
         <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
@@ -37,7 +33,6 @@
         <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
       </select><br/>
       <label>部署</label>
-      <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="error"></span>
       <select name="departmentId" th:field="*{departmentId}">
         <option value="" th:selected="${formModel.departmentId == null}">--部署--</option>
         <option value="1" th:selected="${formModel.departmentId == 1}">総務人事部</option>
@@ -45,6 +40,7 @@
         <option value="3" th:selected="${formModel.departmentId == 3}">営業部</option>
         <option value="4" th:selected="${formModel.departmentId == 4}">技術部</option>
       </select><br/>
+      <span th:if="${#fields.hasErrors('matchIds')}" th:errors="*{matchIds}" class="error"></span><br/>
       <input type="submit" value="登録" />
     </div>
   </form>
