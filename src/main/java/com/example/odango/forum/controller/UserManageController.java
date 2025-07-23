@@ -23,14 +23,11 @@ public class UserManageController {
     @GetMapping("/Forum/management")
     public ModelAndView userManage() {
         ModelAndView mav = new ModelAndView();
-        // あとで管理者権限フィルター追加
         List<UserManageForm> userData = userService.findAllUser();
-//        UsersForm loginUser = (UsersForm) session.getAttribute("loginUser");
-//        int loginUserId = loginUser.getId();
         mav.setViewName("/management");
-        //mav.addObject("loginUser", loginUserId);
         mav.addObject("users", userData);
         mav.addObject("changeStatus", status());
+        setErrorMessage(mav);
         return mav;
     }
 
@@ -46,6 +43,15 @@ public class UserManageController {
     public ModelAndView changeStatus(@PathVariable Integer id, @RequestParam(name = "status", required = false) boolean status) {
         userService.changeStatus(id, status);
         return new ModelAndView("redirect:/Forum/management");
+    }
+
+    /* エラーメッセージ取得 */
+    private void setErrorMessage(ModelAndView mav) {
+        if (session.getAttribute("errorMessages") != null) {
+            mav.addObject("errorMessages", session.getAttribute("errorMessages"));
+            // sessionの破棄
+            session.removeAttribute("errorMessages");
+        }
     }
 
 }

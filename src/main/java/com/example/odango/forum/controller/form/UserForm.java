@@ -48,7 +48,7 @@ public class UserForm {
 
     /*パスワードと確認用パスワードの一致判定メソッド
      * @Validated によって@AssertTrueがついたメソッドを呼び出すことができる*/
-    @AssertTrue(message = "パスワードと確認用パスワードが一致しません")
+    //@AssertTrue(message = "パスワードと確認用パスワードが一致しません")
     public boolean isPasswordValid() {
         return password.equals(confirmPassword);
     }
@@ -56,16 +56,6 @@ public class UserForm {
     @NotBlank(message = "氏名を入力してください")
     @Size(max = 10, message = "氏名は10文字以下で入力してください")
     private String name;
-
-    // 全角スペースのみが入力された時のバリデーション
-    @AssertTrue(message = "氏名を入力してください")
-    public boolean isValidCName() {
-        if (name.matches("^[　]+$")) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     @NotNull(message = "支社を選択してください")
     private Integer branchId;

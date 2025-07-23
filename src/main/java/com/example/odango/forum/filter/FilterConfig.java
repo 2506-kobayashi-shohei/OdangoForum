@@ -18,4 +18,13 @@ public class FilterConfig {
         bean.setOrder(1);
         return bean;
     }
+
+    @Bean
+    public FilterRegistrationBean<AdministratorFilter> AdministratorFilter(){
+        FilterRegistrationBean<AdministratorFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new AdministratorFilter());
+        bean.addUrlPatterns("/Forum/management/*");
+        bean.setOrder(2);
+        return bean;
+    }
 }

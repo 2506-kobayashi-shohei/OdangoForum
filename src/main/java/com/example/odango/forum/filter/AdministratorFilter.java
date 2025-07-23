@@ -1,16 +1,15 @@
 package com.example.odango.forum.filter;
+
+import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.repository.Entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-public class LoginFilter implements Filter {
-    @Autowired
-    HttpSession httpSession;
-
+public class AdministratorFilter implements Filter {
     //１．セッションからログインユーザ情報を取得する。
     @Override
     public void doFilter(ServletRequest request,
@@ -22,15 +21,19 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpRes = (HttpServletResponse) response;
 
         HttpSession session = httpReq.getSession();
+        UserForm user = (UserForm) session.getAttribute("loginUser");
 
-        if (session.getAttribute("loginUser") != null) {
+        if (user.getBranchId() == 1) {
             chain.doFilter(request, response);
         } else {
-            session.setAttribute("errorMessages", "ログインしてください");
-            httpRes.sendRedirect("/Forum/login");
-            return;
+            session.setAttribute("errorMessages", "無効なアクセスです");
+            httpRes.sendRedirect("/Forum");
         }
     }
+
+//    @Override
+//    public void init(FilterConfig config) {
+//    }
 
     @Override
     public void destroy() {

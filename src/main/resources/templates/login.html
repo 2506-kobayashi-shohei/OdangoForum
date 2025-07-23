@@ -20,9 +20,10 @@
             <label>パスワード</label>
             <input th:name="password" type="password" th:value="*{password}"/> <br />
             <!--バリデーションに引っかからないようにするために、「氏名」「支社ID」「部署ID」を一時的に設定-->
-            <input type="hidden" name="name" value="temporaryName">
+            <input type="hidden" name="name" value="Name">
             <input type="hidden" name="branchId" value="1">
             <input type="hidden" name="departmentId" value="1">
+            <input type="hidden" name="confirmPassword" th:value="*{password}">
             <input type="submit" value="ログイン" /> <br />
         </div>
     </form>

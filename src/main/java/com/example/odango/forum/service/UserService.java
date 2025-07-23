@@ -21,12 +21,12 @@ public class UserService {
     /* レコード全件取得処理 */
     public List<UserManageForm> findAllUser() {
         List<UserManage> results = userRepository.findAll();
-        List<UserManageForm> users = setUsersForm(results);
+        List<UserManageForm> users = setAllUser(results);
         return users;
     }
 
     /* DBから取得したデータをFormに設定 */
-    private List<UserManageForm> setUsersForm(List<UserManage> results) {
+    private List<UserManageForm> setAllUser(List<UserManage> results) {
         List<UserManageForm> users = new ArrayList<>();
         for (int i = 0; i < results.size(); i++) {
             UserManageForm userForm = new UserManageForm();
@@ -89,6 +89,37 @@ public class UserService {
     public boolean isUnique(String account){
         List<User> users = userRepository.findByAccount(account);
         return users.isEmpty();
+    }
+
+    /* レコード1件取得 */
+    public UserForm editUser(Integer id) {
+        List<User> results = userRepository.findById(id);
+        List<UserForm> user = new ArrayList<>();
+        //入力したIDが存在しなければnullで返す
+        if (results.get(0) == null) {
+            user.add(null);
+        } else {
+            user = setUserForm(results);
+        }
+        return user.get(0);
+    }
+
+    private List<UserForm> setUserForm(List<User> results){
+        List<UserForm> users = new ArrayList<>();
+        for(User result : results){
+            UserForm user = new UserForm();
+            user.setId(result.getId());
+            user.setAccount(result.getAccount());
+            user.setPassword(result.getPassword());
+            user.setName(result.getName());
+            user.setBranchId(result.getBranchId());
+            user.setDepartmentId(result.getDepartmentId());
+            user.setStopped(result.isStopped());
+            user.setCreatedDate(result.getCreatedDate());
+            user.setUpdatedDate(result.getUpdatedDate());
+            users.add(user);
+        }
+        return users;
     }
 
     /* ステータス変更処理 */
