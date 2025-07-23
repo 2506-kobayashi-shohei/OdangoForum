@@ -30,4 +30,9 @@ public interface UserRepository {
             "SET is_stopped = #{status}, updated_date = CURRENT_TIMESTAMP " +
             "WHERE id = #{id}")
     void updateStatusById(Integer id, boolean status);
+
+    @Update("UPDATE  users SET account = #{account}, password = #{password}, " +
+            "name = #{name}, branch_id = #{branchId}, department_id = #{departmentId} " +
+            "WHERE id = #{id}")
+    void update(User user);
 }

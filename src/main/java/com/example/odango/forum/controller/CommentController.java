@@ -39,6 +39,7 @@ public class CommentController {
             }
             session.setAttribute("errorMessages", errorMessages);
             mav.addObject("commentForm", commentForm);
+            mav.setViewName("redirect:/Forum");
             return mav;
         }
 
