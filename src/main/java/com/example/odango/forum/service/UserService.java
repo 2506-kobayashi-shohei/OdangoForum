@@ -100,8 +100,8 @@ public class UserService {
     public UserForm editUser(Integer id) {
         List<User> results = userRepository.findById(id);
         List<UserForm> user = new ArrayList<>();
-        //入力したIDが存在しなければnullで返す
-        if (results.get(0) == null) {
+        // 入力したIDが存在しなければnullで返す
+        if (results.isEmpty()) {
             user.add(null);
         } else {
             user = setUserForm(results);

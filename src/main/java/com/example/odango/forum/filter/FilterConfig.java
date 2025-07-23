@@ -10,11 +10,10 @@ public class FilterConfig {
     public FilterRegistrationBean<LoginFilter> loginFilter() {
         FilterRegistrationBean<LoginFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new LoginFilter());
-        //ログイン情報が必要なURL(URLは仮)
+        //ログイン情報が必要なURL
         bean.addUrlPatterns("/Forum");
         bean.addUrlPatterns("/Forum/management/*");
         bean.addUrlPatterns("/Forum/new");
-        bean.addUrlPatterns("/Forum/edit/*");
         bean.setOrder(1);
         return bean;
     }
