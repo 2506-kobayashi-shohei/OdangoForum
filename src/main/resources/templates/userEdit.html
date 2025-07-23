@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <link th:href="@{/css/userForm.css}" rel="styleSheet">
     <title>ユーザー編集</title>
 </head>
 <body>
@@ -10,7 +10,6 @@
     <h2>ユーザー編集</h2>
 </div>
 <div class="main-contents">
-
     <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
         <span th:text="${errorMessage}"></span>
     </div>
@@ -35,13 +34,13 @@
 
             <label>支社</label>
             <span th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="error"></span>
-            <select name="branchId" th:field="*{branchId}">
-                <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
-                <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
-                <option value="2" th:selected="${formModel.branchId == 2}">A社</option>
-                <option value="3" th:selected="${formModel.branchId == 3}">B社</option>
-                <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
-            </select><br/>
+                <select name="branchId" th:field="*{branchId}">
+                    <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
+                    <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
+                    <option value="2" th:selected="${formModel.branchId == 2}">A社</option>
+                    <option value="3" th:selected="${formModel.branchId == 3}">B社</option>
+                    <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
+                </select><br/>
 
             <label>部署</label>
             <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="error"></span>
@@ -53,7 +52,9 @@
                 <option value="4" th:selected="${formModel.departmentId == 4}">技術部</option>
             </select><br/>
 
-            <input type="submit" value="編集" />
+            <div class="submit-button">
+                <input type="submit" value="編集" />
+            </div>
         </div>
     </form>
 </div>

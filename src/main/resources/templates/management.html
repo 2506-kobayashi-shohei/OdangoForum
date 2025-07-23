@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <link th:href="@{/css/management.css}" rel="styleSheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script th:src="@{/js/change.js}"></script>
     <title>ユーザー管理</title>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="is-stopped" th:if="${loginUser.id} == ${user.id}">
-                    <div class="status">稼働</div>
+                    <div class="login-user-status">稼働</div>
                 </div>
 
                 <div class="edit-button">

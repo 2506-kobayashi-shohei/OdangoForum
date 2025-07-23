@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <link th:href="@{/css/style.css}" rel="styleSheet">
+  <link th:href="@{/css/userForm.css}" rel="styleSheet">
   <title>新規ユーザー登録</title>
 </head>
 <body>
@@ -25,6 +25,7 @@
       <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
       <input type="text" th:field="*{name}"><br/>
       <label>支社</label>
+      <span th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="error"></span>
       <select name="branchId" th:field="*{branchId}">
         <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
         <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
@@ -33,6 +34,7 @@
         <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
       </select><br/>
       <label>部署</label>
+      <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="error"></span>
       <select name="departmentId" th:field="*{departmentId}">
         <option value="" th:selected="${formModel.departmentId == null}">--部署--</option>
         <option value="1" th:selected="${formModel.departmentId == 1}">総務人事部</option>
@@ -41,7 +43,9 @@
         <option value="4" th:selected="${formModel.departmentId == 4}">技術部</option>
       </select><br/>
       <span th:if="${#fields.hasErrors('matchIds')}" th:errors="*{matchIds}" class="error"></span><br/>
-      <input type="submit" value="登録" />
+      <div class="submit-button">
+        <input type="submit" value="登録" />
+      </div>
     </div>
   </form>
 </div>

@@ -52,6 +52,8 @@ public class UserEditController {
         }
 
         ModelAndView mav = new ModelAndView();
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        mav.addObject("loginUser", loginUser);
         mav.addObject("formModel", user);
         setErrorMessage(mav);
         mav.setViewName("/userEdit");
@@ -87,7 +89,7 @@ public class UserEditController {
         }
 
         // アカウント重複チェック
-        if (!userService.isUsersEmpty(userForm.getAccount())){
+        if (!userService.isUnique(userForm.getAccount(), id)){
             errorMessages.add("アカウントが重複しています");
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("formModel", userForm);
