@@ -52,6 +52,8 @@ public class UserEditController {
         }
 
         ModelAndView mav = new ModelAndView();
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        mav.addObject("loginUser", loginUser);
         mav.addObject("formModel", user);
         setErrorMessage(mav);
         mav.setViewName("/userEdit");

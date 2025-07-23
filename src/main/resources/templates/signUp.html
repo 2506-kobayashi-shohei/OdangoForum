@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <link th:href="@{/css/style.css}" rel="styleSheet">
+  <link th:href="@{/css/userForm.css}" rel="styleSheet">
   <title>新規ユーザー登録</title>
 </head>
 <body>
@@ -45,7 +45,9 @@
         <option value="3" th:selected="${formModel.departmentId == 3}">営業部</option>
         <option value="4" th:selected="${formModel.departmentId == 4}">技術部</option>
       </select><br/>
-      <input type="submit" value="登録" />
+      <div class="submit-button">
+        <input type="submit" value="登録" />
+      </div>
     </div>
   </form>
 </div>
