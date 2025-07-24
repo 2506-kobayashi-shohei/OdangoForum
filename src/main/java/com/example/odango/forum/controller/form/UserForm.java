@@ -17,17 +17,15 @@ public class UserForm {
     private int id;
     @NotBlank(message = "アカウントを入力してください",
             groups = {ValidationGroup.SignUp.class, ValidationGroup.Login.class, ValidationGroup.Edit.class})
-    @Pattern(regexp = "^[a-zA-Z0-9]*$",
+    @Pattern(regexp = "^([a-zA-Z0-9]{6,20})?$",
             message = "アカウントは半角英数字かつ6文字以上20文字以下で入力してください",
             groups = {ValidationGroup.SignUp.class, ValidationGroup.Edit.class})
-    @Size(min = 6, max = 20, message = "アカウントは半角英数字かつ6文字以上20文字以下で入力してください")
     private String account;
     @NotBlank(message = "パスワードを入力してください",
             groups = {ValidationGroup.SignUp.class, ValidationGroup.Login.class})
-    @Pattern(regexp = "^[!-~]*$",
+    @Pattern(regexp = "^([!-~]{6,20})?$",
             message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください",
-            groups = ValidationGroup.SignUp.class)
-    @Size(min = 6, max = 20, message = "アカウントは半角英数字かつ6文字以上20文字以下で入力してください")
+            groups = {ValidationGroup.SignUp.class, ValidationGroup.Edit.class})
     private String password;
     private String confirmPassword;
 

@@ -4,6 +4,9 @@ import com.example.odango.forum.repository.Entity.Comment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface CommentRepository {
@@ -13,4 +16,7 @@ public interface CommentRepository {
 
     @Delete("DELETE FROM comments WHERE id = #{id};")
     void delete(Integer id);
+
+    @Select("SELECT * FROM comments WHERE id = #{id}")
+    List<Comment> findComment(Integer id);
 }

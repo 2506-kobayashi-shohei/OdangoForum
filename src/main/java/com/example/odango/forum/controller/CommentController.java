@@ -3,6 +3,7 @@ package com.example.odango.forum.controller;
 import com.example.odango.forum.controller.form.CommentForm;
 import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.CommentService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,9 +56,28 @@ public class CommentController {
 
     @DeleteMapping("/Forum/deleteComment/{id}")
     public ModelAndView deleteComment(@PathVariable Integer id){
+        ModelAndView mav = new ModelAndView();
+        String strId = String.valueOf(id);
+
+        if(StringUtils.isBlank(strId) || !strId.matches("^[0-9]+$")){
+            mav.addObject("errorMessages", "不正なパラメータが入力されました");
+            mav.setViewName("redirect:/Forum");
+            return mav;
+        }
+
+        CommentForm comment = commentService.findComment(id);
+        UserForm user = (UserForm) session.getAttribute("loginUser");
+
+        if(comment == null || user.getId() != comment.getUserId()){
+            mav.addObject("errorMessages", "不正なパラメータが入力されました");
+            mav.setViewName("redirect:/Forum");
+            return mav;
+        }
+
         // コメント削除処理
         commentService.deleteComment(id);
 
-        return new ModelAndView("redirect:/Forum");
+        mav.setViewName("redirect:/Forum");
+        return mav;
     }
 }

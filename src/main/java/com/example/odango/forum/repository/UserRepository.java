@@ -37,4 +37,9 @@ public interface UserRepository {
             "name = #{name}, branch_id = #{branchId}, department_id = #{departmentId} " +
             "WHERE id = #{id}")
     void update(User user);
+
+    @Update("UPDATE  users SET account = #{account}, " +
+            "name = #{name}, branch_id = #{branchId}, department_id = #{departmentId} " +
+            "WHERE id = #{id}")
+    void updateWithoutPassword(User user);
 }

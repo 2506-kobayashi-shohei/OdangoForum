@@ -77,7 +77,7 @@ public class UserEditController {
                                    BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
-        /*アカウント重複チェック*/
+        /*アカウント重複チェック
         String account = userForm.getAccount();
         if (!StringUtils.isBlank(account)) {
             if (!userService.isUnique(userForm.getAccount(), id)) {
@@ -86,9 +86,20 @@ public class UserEditController {
                 result.addError(notAccountUnique);
             }
         }
-        /*アカウント重複チェック（ここまで）*/
+        アカウント重複チェック（ここまで）*/
 
-        // エラー処理
+        /*アカウント重複チェック*/
+        String account = userForm.getAccount();
+        if (!userService.isUnique(userForm.getAccount(), id)) {
+            errorMessages.add("アカウントが重複しています");
+            UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+            mav.addObject("loginUser", loginUser);
+            mav.addObject("errorMessages", errorMessages);
+            mav.addObject("formModel", userForm);
+            mav.setViewName("/userEdit");
+            return mav;
+        }
+
         if (result.hasErrors()){
             for (FieldError error : result.getFieldErrors()) {
                 errorMessages.add(error.getDefaultMessage());
@@ -101,15 +112,6 @@ public class UserEditController {
             mav.setViewName("/userEdit");
             return mav;
         }
-
-//        // アカウント重複チェック
-//        if (!userService.isUnique(userForm.getAccount(), id)){
-//            errorMessages.add("アカウントが重複しています");
-//            mav.addObject("errorMessages", errorMessages);
-//            mav.addObject("formModel", userForm);
-//            mav.setViewName("/userEdit");
-//            return mav;
-//        }
 
         // アカウント編集処理
         userService.update(userForm);
