@@ -73,11 +73,11 @@ public class UserEditController {
     @PutMapping("/Forum/management/update/{id}")
     public ModelAndView updateUser(@PathVariable Integer id,
                                    @Validated(ValidationGroup.Edit.class)
-                                   @ModelAttribute("editModel") UserForm userForm,
+                                   @ModelAttribute("formModel") UserForm userForm,
                                    BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
-        /*アカウント重複チェック
+        /*アカウント重複チェック*/
         String account = userForm.getAccount();
         if (!StringUtils.isBlank(account)) {
             if (!userService.isUnique(userForm.getAccount(), id)) {
@@ -86,28 +86,11 @@ public class UserEditController {
                 result.addError(notAccountUnique);
             }
         }
-        アカウント重複チェック（ここまで）*/
-
-        /*アカウント重複チェック*/
-        String account = userForm.getAccount();
-        if (!userService.isUnique(userForm.getAccount(), id)) {
-            errorMessages.add("アカウントが重複しています");
-            UserForm loginUser = (UserForm) session.getAttribute("loginUser");
-            mav.addObject("loginUser", loginUser);
-            mav.addObject("errorMessages", errorMessages);
-            mav.addObject("formModel", userForm);
-            mav.setViewName("/userEdit");
-            return mav;
-        }
 
         if (result.hasErrors()){
-            for (FieldError error : result.getFieldErrors()) {
-                errorMessages.add(error.getDefaultMessage());
-            }
             // ユーザー編集画面にログインユーザー情報を加えたため追記
             UserForm loginUser = (UserForm) session.getAttribute("loginUser");
             mav.addObject("loginUser", loginUser);
-            mav.addObject("errorMessages", errorMessages);
             mav.addObject("formModel", userForm);
             mav.setViewName("/userEdit");
             return mav;
