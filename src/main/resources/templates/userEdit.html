@@ -8,11 +8,8 @@
 <body>
 <div class="header-contents">
     <h2>ユーザー編集</h2>
-</div>
+</d
 <div class="main-contents">
-<!--    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">-->
-<!--        <span th:text="${errorMessage}"></span>-->
-<!--    </div>-->
 
     <form th:method="put" th:action="@{/Forum/management/update/{id}(id=${formModel.id})}" th:object="${formModel}">
         <div class="form-area">
@@ -24,7 +21,7 @@
             <label>パスワード</label>
             <input type="password" th:field="*{password}"/></textarea><br/>
 
-            <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="errorMessages"></div>
+            <div th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}" class="errorMessages"></div>
             <label>パスワード（確認用）</label>
             <input type="password" th:field="*{confirmPassword}"><br/>
 
