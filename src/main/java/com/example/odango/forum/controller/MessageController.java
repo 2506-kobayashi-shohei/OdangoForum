@@ -46,14 +46,16 @@ public class MessageController {
     }
     /*削除処理*/
     @DeleteMapping("/Forum/deleteMessage/{id}")
-    public ModelAndView deleteMessage(@PathVariable String strId){
+    public ModelAndView deleteMessage(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView();
+        String strId = String.valueOf(id);
+        
         if(StringUtils.isBlank(strId) || !strId.matches("^[0-9]+$")){
             mav.addObject("errorMessages", "不正なパラメータが入力されました");
             mav.setViewName("redirect:/Forum");
             return mav;
         }
-        int id = Integer.parseInt(strId);
+
         MessageForm message = messageService.findMessage(id);
         UserForm user = (UserForm) session.getAttribute("loginUser");
         if(message == null || user.getId() != message.getUserId()){

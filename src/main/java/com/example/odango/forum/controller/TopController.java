@@ -48,6 +48,7 @@ public class TopController {
         mav.setViewName("/top");
         mav.addObject("start", start);
         mav.addObject("end", end);
+        mav.addObject("category", category);
         mav.addObject("loginUser", loginUser);
         mav.addObject("messages", messages);
         mav.addObject("comments", comments);

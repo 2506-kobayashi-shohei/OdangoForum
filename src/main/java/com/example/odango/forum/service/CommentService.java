@@ -65,4 +65,26 @@ public class CommentService {
     public void deleteComment(Integer id){
         commentRepository.delete(id);
     }
+
+    /*レコード１件取得（削除用）*/
+    public CommentForm findComment(Integer id){
+        List<Comment> comment = commentRepository.findComment(id);
+
+        if (comment.isEmpty()){
+            return null;
+        }
+
+        return setCommentForm(comment.get(0));
+    }
+    /*取得したEntityをFormに詰め替え*/
+    private CommentForm setCommentForm(Comment comment) {
+        CommentForm commentForm = new CommentForm();
+        commentForm.setId(comment.getId());
+        commentForm.setText(comment.getText());
+        commentForm.setUserId(comment.getUserId());
+        commentForm.setMessageId(comment.getMessageId());
+        commentForm.setCreatedDate(comment.getCreatedDate());
+        commentForm.setUpdatedDate(comment.getUpdatedDate());
+        return commentForm;
+    }
 }

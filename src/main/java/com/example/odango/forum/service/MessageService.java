@@ -45,6 +45,7 @@ public class MessageService {
         }
 
         if(!StringUtils.isEmpty(category)) {
+            category = "%" + category + "%";
             List<UserMessage> messages = userMessageRepository.selectByCategory(startDate, endDate, category, limit);
             return setUserMessageForm(messages);
         }else {
