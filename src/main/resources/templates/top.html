@@ -67,7 +67,7 @@
             <div class="comment-user-name">
                 <span th:text="${comment.name}"></span>
             </div>
-            <div class="delete-button">
+            <div class="delete-comments-button">
                 <form th:action="@{/Forum/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id} == ${comment.userId}">
                     <input class="delete" type="submit" value="削除"/>
                 </form>

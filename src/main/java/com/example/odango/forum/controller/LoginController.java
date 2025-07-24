@@ -49,7 +49,7 @@ public class LoginController {
             return mav;
         }
         UserForm user = userService.select(userForm.getAccount(), userForm.getPassword());
-        if (user == null) {
+        if (user == null || !(user.isStopped())) {
             messages.add("ログインに失敗しました");
             mav.addObject("errorMessages", messages);
             mav.setViewName("/login");

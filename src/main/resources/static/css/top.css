@@ -37,7 +37,7 @@ nav a:hover{
 .main-contents {
 	margin: 20px;
 	padding: 10px 10px 5px 10px;
-	background-color: #00ccff;
+	background-color: #ffffff;
 	height: 100%;
 	width: 80%;
 }
@@ -56,12 +56,15 @@ nav a:hover{
 }
 
 .messages{
-    background-color: #ffff28;
+    background-color: #ffffff;
+    padding: 5px 0;
+    border: 1px dashed #000;
 }
 
 h4{
     margin: 0 auto;
     padding: 0;
+    margin-left:5px;
 }
 
 pre {
@@ -69,10 +72,16 @@ pre {
   word-break:break-all;
 }
 
+.text{
+    margin-left:5px;
+}
+
 .message-profile{
     font-size: 10px;
+    color: gray;
     line-height: 0px;
-    text-align: right
+    text-align: right;
+    margin-right:5px;
 }
 
 .delete-button{
@@ -84,26 +93,36 @@ pre {
     margin-left:5px;
 }
 
-h5{
-    margin: 0 auto;
-    padding: 0;
-}
-
 .comments{
-    background-color: #33ff33;
+    background-color: #ffffff;
+    border: 1px dashed #000;
+    width: 95%;
+    margin: 0 0 0 auto;
 }
 
 .comment-user-name{
     font-size: 10px;
     line-height: 0px;
+    margin-left:5px;
+    color: gray;
 }
 
 .comment{
-    background-color: #9933ff;
+    background-color: #ffffff;
+    border-top: 1px dashed #000;
 }
 
 label{
     font-size: 12px;
+}
+
+.delete-comments-button{
+    display:inline-block;
+    width:5%;
+    margin-top:10px;
+    margin-bottom:5px;
+    margin-right:5px;
+    margin-left:5px;
 }
 
 .comment .Comment-box{

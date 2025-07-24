@@ -32,25 +32,32 @@
             <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
             <input type="text" th:field="*{name}"><br/>
 
-            <label>支社</label>
-            <span th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="error"></span>
-                <select name="branchId" th:field="*{branchId}">
-                    <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
-                    <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
-                    <option value="2" th:selected="${formModel.branchId == 2}">A社</option>
-                    <option value="3" th:selected="${formModel.branchId == 3}">B社</option>
-                    <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
-                </select><br/>
+            <div class="is-stopped" th:if="${loginUser.id} != ${formModel.id}">
+                <label>支社</label>
+                <span th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="error"></span>
+                    <select name="branchId" th:field="*{branchId}">
+                        <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
+                        <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
+                        <option value="2" th:selected="${formModel.branchId == 2}">A社</option>
+                        <option value="3" th:selected="${formModel.branchId == 3}">B社</option>
+                        <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
+                    </select><br/>
 
-            <label>部署</label>
-            <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="error"></span>
-            <select name="departmentId" th:field="*{departmentId}">
-                <option value="" th:selected="${formModel.departmentId == null}">--部署--</option>
-                <option value="1" th:selected="${formModel.departmentId == 1}">総務人事部</option>
-                <option value="2" th:selected="${formModel.departmentId == 2}">情報管理部</option>
-                <option value="3" th:selected="${formModel.departmentId == 3}">営業部</option>
-                <option value="4" th:selected="${formModel.departmentId == 4}">技術部</option>
-            </select><br/>
+                <label>部署</label>
+                <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="error"></span>
+                <select name="departmentId" th:field="*{departmentId}">
+                    <option value="" th:selected="${formModel.departmentId == null}">--部署--</option>
+                    <option value="1" th:selected="${formModel.departmentId == 1}">総務人事部</option>
+                    <option value="2" th:selected="${formModel.departmentId == 2}">情報管理部</option>
+                    <option value="3" th:selected="${formModel.departmentId == 3}">営業部</option>
+                    <option value="4" th:selected="${formModel.departmentId == 4}">技術部</option>
+                </select><br/>
+            </div>
+
+            <div class="is-stopped" th:if="${loginUser.id} == ${formModel.id}">
+                <input type="hidden" name="branchId" th:value="${formModel.branchId}">
+                <input type="hidden" name="departmentId" th:value="${formModel.departmentId}">
+            </div>
 
             <div class="submit-button">
                 <input type="submit" value="編集" />
