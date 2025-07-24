@@ -5,6 +5,7 @@ import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.repository.Entity.UserManage;
 import com.example.odango.forum.repository.Entity.User;
 import com.example.odango.forum.repository.UserRepository;
+import com.example.odango.forum.utils.CipherUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,9 +46,8 @@ public class UserService {
     }
 
     public UserForm select(String account, String password) {
-        /*String encPassword = CipherUtil.encrypt(password);
-         * ユーザー情報登録処理が実装できたらエンコーディングします*/
-        List<User> users = userRepository.selectByAccountAndPassword(account, /*encPassword*/password);
+        String encPassword = CipherUtil.encrypt(password);
+        List<User> users = userRepository.selectByAccountAndPassword(account, encPassword);
         if (users.isEmpty()) {
             return null;
         }
@@ -69,15 +69,16 @@ public class UserService {
     }
 
     public void insert(UserForm userForm) {
-        User user = setUserEntity(userForm);
+        String encPassword = CipherUtil.encrypt(userForm.getPassword());
+        User user = setUserEntity(userForm, encPassword);
         userRepository.insert(user);
     }
 
-    private User setUserEntity(UserForm userForm) {
+    private User setUserEntity(UserForm userForm, String encPassword) {
         User user = new User();
         user.setId(userForm.getId());
         user.setAccount(userForm.getAccount());
-        user.setPassword(userForm.getPassword());
+        user.setPassword(encPassword);
         user.setName(userForm.getName());
         user.setBranchId(userForm.getBranchId());
         user.setDepartmentId(userForm.getDepartmentId());
@@ -89,11 +90,13 @@ public class UserService {
 
     public boolean isUnique(String account, Integer id){
         List<User> users = userRepository.findByAccount(account);
-
         if(id == users.get(0).getId()){
             return true;
         }
-
+        return false;
+    }
+    public boolean isUsersEmpty(String account){
+        List<User> users = userRepository.findByAccount(account);
         return users.isEmpty();
     }
 
@@ -135,7 +138,8 @@ public class UserService {
 
     // アカウント編集処理
     public void update(UserForm userForm){
-        User updateUser = setUserEntity(userForm);
+        String encPassword = CipherUtil.encrypt(userForm.getPassword());
+        User updateUser = setUserEntity(userForm, encPassword);
         userRepository.update(updateUser);
     }
 }
