@@ -10,31 +10,32 @@
     <h2>ユーザー編集</h2>
 </div>
 <div class="main-contents">
-    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
-        <span th:text="${errorMessage}"></span>
-    </div>
+<!--    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">-->
+<!--        <span th:text="${errorMessage}"></span>-->
+<!--    </div>-->
 
     <form th:method="put" th:action="@{/Forum/management/update/{id}(id=${formModel.id})}" th:object="${formModel}">
         <div class="form-area">
+            <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="errorMessages"></div>
             <label>アカウント</label>
-            <span th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="error"></span>
             <input type="text" th:field="*{account}"><br/>
 
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errorMessages"></div>
             <label>パスワード</label>
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
             <input type="password" th:field="*{password}"/></textarea><br/>
 
+            <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="errorMessages"></div>
             <label>パスワード（確認用）</label>
-            <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error"></span>
             <input type="password" th:field="*{confirmPassword}"><br/>
 
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errorMessages"></div>
             <label>氏名</label>
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
             <input type="text" th:field="*{name}"><br/>
 
             <div class="is-stopped" th:if="${loginUser.id} != ${formModel.id}">
+                <div th:if="${#fields.hasErrors('matchIds')}" th:errors="*{matchIds}" class="errorMessages"></div>
+                <div th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="errorMessages"></div>
                 <label>支社</label>
-                <span th:if="${#fields.hasErrors('branchId')}" th:errors="*{branchId}" class="error"></span>
                     <select name="branchId" th:field="*{branchId}">
                         <option value="" th:selected="${formModel.branchId == null}">--支社--</option>
                         <option value="1" th:selected="${formModel.branchId == 1}">本社</option>
@@ -43,8 +44,8 @@
                         <option value="4" th:selected="${formModel.branchId == 4}">C社</option>
                     </select><br/>
 
+                <div th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="errorMessages"></div>
                 <label>部署</label>
-                <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}" class="error"></span>
                 <select name="departmentId" th:field="*{departmentId}">
                     <option value="" th:selected="${formModel.departmentId == null}">--部署--</option>
                     <option value="1" th:selected="${formModel.departmentId == 1}">総務人事部</option>
