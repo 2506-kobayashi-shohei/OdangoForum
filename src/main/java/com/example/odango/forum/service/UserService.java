@@ -90,10 +90,13 @@ public class UserService {
 
     public boolean isUnique(String account, Integer id){
         List<User> users = userRepository.findByAccount(account);
-        if(id == users.get(0).getId()){
+        if(users.isEmpty()){
             return true;
+        } else if(id == users.get(0).getId()){
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
     public boolean isUsersEmpty(String account){
         List<User> users = userRepository.findByAccount(account);

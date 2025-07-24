@@ -2,6 +2,7 @@ package com.example.odango.forum.controller;
 
 import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.UserService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,6 +77,16 @@ public class UserEditController {
                                    BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
+        /*アカウント重複チェック*/
+        String account = userForm.getAccount();
+        if (!StringUtils.isBlank(account)) {
+            if (!userService.isUnique(userForm.getAccount(), id)) {
+                FieldError notAccountUnique = new FieldError(result.getObjectName(), "account", account, false, null, null,
+                        "アカウントが重複しています");
+                result.addError(notAccountUnique);
+            }
+        }
+        /*アカウント重複チェック（ここまで）*/
 
         // エラー処理
         if (result.hasErrors()){
@@ -91,14 +102,14 @@ public class UserEditController {
             return mav;
         }
 
-        // アカウント重複チェック
-        if (!userService.isUnique(userForm.getAccount(), id)){
-            errorMessages.add("アカウントが重複しています");
-            mav.addObject("errorMessages", errorMessages);
-            mav.addObject("formModel", userForm);
-            mav.setViewName("/userEdit");
-            return mav;
-        }
+//        // アカウント重複チェック
+//        if (!userService.isUnique(userForm.getAccount(), id)){
+//            errorMessages.add("アカウントが重複しています");
+//            mav.addObject("errorMessages", errorMessages);
+//            mav.addObject("formModel", userForm);
+//            mav.setViewName("/userEdit");
+//            return mav;
+//        }
 
         // アカウント編集処理
         userService.update(userForm);
