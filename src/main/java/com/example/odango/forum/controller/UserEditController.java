@@ -2,6 +2,7 @@ package com.example.odango.forum.controller;
 
 import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.UserService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,12 +78,10 @@ public class UserEditController {
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
 
-        // エラー処理
-        if (result.hasErrors()){
-            for (FieldError error : result.getFieldErrors()) {
-                errorMessages.add(error.getDefaultMessage());
-            }
-            // ユーザー編集画面にログインユーザー情報を加えたため追記
+        /*アカウント重複チェック*/
+        String account = userForm.getAccount();
+        if (!userService.isUnique(userForm.getAccount(), id)) {
+            errorMessages.add("アカウントが重複しています");
             UserForm loginUser = (UserForm) session.getAttribute("loginUser");
             mav.addObject("loginUser", loginUser);
             mav.addObject("errorMessages", errorMessages);
@@ -91,9 +90,13 @@ public class UserEditController {
             return mav;
         }
 
-        // アカウント重複チェック
-        if (!userService.isUnique(userForm.getAccount(), id)){
-            errorMessages.add("アカウントが重複しています");
+        if (result.hasErrors()){
+            for (FieldError error : result.getFieldErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            // ユーザー編集画面にログインユーザー情報を加えたため追記
+            UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+            mav.addObject("loginUser", loginUser);
             mav.addObject("errorMessages", errorMessages);
             mav.addObject("formModel", userForm);
             mav.setViewName("/userEdit");

@@ -6,6 +6,7 @@ import com.example.odango.forum.repository.Entity.UserManage;
 import com.example.odango.forum.repository.Entity.User;
 import com.example.odango.forum.repository.UserRepository;
 import com.example.odango.forum.utils.CipherUtil;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,7 +79,9 @@ public class UserService {
         User user = new User();
         user.setId(userForm.getId());
         user.setAccount(userForm.getAccount());
-        user.setPassword(encPassword);
+        if(!StringUtils.isBlank(userForm.getPassword())) {
+            user.setPassword(encPassword);
+        }
         user.setName(userForm.getName());
         user.setBranchId(userForm.getBranchId());
         user.setDepartmentId(userForm.getDepartmentId());
@@ -90,10 +93,13 @@ public class UserService {
 
     public boolean isUnique(String account, Integer id){
         List<User> users = userRepository.findByAccount(account);
-        if(id == users.get(0).getId()){
+        if(users.isEmpty()) {
             return true;
+        } else if (id == users.get(0).getId()) {
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
     public boolean isUsersEmpty(String account){
         List<User> users = userRepository.findByAccount(account);
@@ -140,6 +146,10 @@ public class UserService {
     public void update(UserForm userForm){
         String encPassword = CipherUtil.encrypt(userForm.getPassword());
         User updateUser = setUserEntity(userForm, encPassword);
-        userRepository.update(updateUser);
+        if(!StringUtils.isBlank(userForm.getPassword())) {
+            userRepository.update(updateUser);
+        } else {
+            userRepository.updateWithoutPassword(updateUser);
+        }
     }
 }

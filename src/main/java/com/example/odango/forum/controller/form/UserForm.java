@@ -26,6 +26,9 @@ public class UserForm {
     @Pattern(regexp = "^[!-~]{6,20}$",
             message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください",
             groups = ValidationGroup.SignUp.class)
+    @Pattern(regexp = "^([!-~]{6,20})?$",
+            message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください",
+            groups = ValidationGroup.Edit.class)
     private String password;
     private String confirmPassword;
 
