@@ -1,9 +1,6 @@
 package com.example.odango.forum.controller;
 
-import com.example.odango.forum.controller.form.CommentForm;
-import com.example.odango.forum.controller.form.UserCommentForm;
-import com.example.odango.forum.controller.form.UserMessageForm;
-import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.controller.form.*;
 import com.example.odango.forum.service.CommentService;
 import com.example.odango.forum.service.MessageService;
 import jakarta.servlet.http.HttpSession;
@@ -12,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,6 +39,10 @@ public class TopController {
 
         // 投稿情報取得
         List<UserMessageForm> messages = messageService.findAllMessage(start, end, category);
+
+        // 表示用作成日設定
+        List<UserMessageForm> processing = messageService.dateTimeFormatter(messages);
+
         // コメント情報取得
         List<UserCommentForm> comments = commentService.findAllComment();
         CommentForm commentForm = new CommentForm();
@@ -51,7 +51,7 @@ public class TopController {
         mav.addObject("end", end);
         mav.addObject("category", category);
         mav.addObject("loginUser", loginUser);
-        mav.addObject("messages", messages);
+        mav.addObject("messages", processing);
         mav.addObject("comments", comments);
         mav.addObject("commentForm", commentForm);
         mav.addObject("button", button);

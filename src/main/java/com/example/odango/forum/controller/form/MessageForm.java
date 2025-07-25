@@ -2,7 +2,6 @@ package com.example.odango.forum.controller.form;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.*;
-import jakarta.validation.groups.Default;
 import lombok.Getter;
 import lombok.Setter;
 

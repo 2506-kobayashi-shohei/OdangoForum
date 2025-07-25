@@ -19,4 +19,5 @@ public class UserMessageForm {
     private String category;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private String strCreatedDate;
 }
