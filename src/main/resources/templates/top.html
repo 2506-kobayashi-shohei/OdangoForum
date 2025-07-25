@@ -55,7 +55,10 @@
         </div>
 
         <div class="delete-button">
-            <form th:action="@{/Forum/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id} == ${message.userId}">
+            <form th:action="@{/Forum/deleteMessage/{id}(id=${message.id})}" th:method="delete"
+                  th:if="${loginUser.id} == ${message.userId} or ${loginUser.departmentId} == 2
+                  or (${loginUser.branchId} == ${message.branchId} and
+                  ${loginUser.departmentId} == 3 and ${message.departmentId} == 4)">
                 <input class="delete" type="submit" value="削除"/>
             </form>
         </div>
@@ -68,7 +71,10 @@
                 <span th:text="${comment.name}"></span>
             </div>
             <div class="delete-comments-button">
-                <form th:action="@{/Forum/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id} == ${comment.userId}">
+                <form th:action="@{/Forum/deleteComment/{id}(id=${comment.id})}" th:method="delete"
+                      th:if="${loginUser.id} == ${comment.userId} or ${loginUser.departmentId} == 2
+                  or (${loginUser.branchId} == ${comment.branchId} and
+                  ${loginUser.departmentId} == 3 and ${comment.departmentId} == 4)">
                     <input class="delete" type="submit" value="削除"/>
                 </form>
             </div>

@@ -13,5 +13,11 @@ public interface UserCommentRepository {
             "u.account, u.name, u.branch_id, u.department_id " +
             "FROM comments c INNER JOIN users u ON c.user_id = u.id " +
             "ORDER BY c.created_date ASC")
-    public List<UserComment> findAll();
+    List<UserComment> findAll();
+
+    @Select("SELECT c.id, c.text, c.user_id, c.message_id, c.created_date, c.updated_date, " +
+            "u.account, u.name, u.branch_id, u.department_id " +
+            "FROM comments c INNER JOIN users u ON c.user_id = u.id " +
+            "WHERE c.id = #{id}")
+    List<UserComment> findComment(Integer id);
 }

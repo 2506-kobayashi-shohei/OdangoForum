@@ -67,22 +67,24 @@ public class CommentService {
     }
 
     /*レコード１件取得（削除用）*/
-    public CommentForm findComment(Integer id){
-        List<Comment> comment = commentRepository.findComment(id);
-
+    public UserCommentForm findComment(Integer id){
+        List<UserComment> comment = userCommentRepository.findComment(id);
         if (comment.isEmpty()){
             return null;
         }
-
         return setCommentForm(comment.get(0));
     }
     /*取得したEntityをFormに詰め替え*/
-    private CommentForm setCommentForm(Comment comment) {
-        CommentForm commentForm = new CommentForm();
+    private UserCommentForm setCommentForm(UserComment comment) {
+        UserCommentForm commentForm = new UserCommentForm();
         commentForm.setId(comment.getId());
-        commentForm.setText(comment.getText());
+        commentForm.setAccount(comment.getAccount());
+        commentForm.setName(comment.getName());
+        commentForm.setBranchId(comment.getBranchId());
+        commentForm.setDepartmentId(comment.getDepartmentId());
         commentForm.setUserId(comment.getUserId());
         commentForm.setMessageId(comment.getMessageId());
+        commentForm.setText(comment.getText());
         commentForm.setCreatedDate(comment.getCreatedDate());
         commentForm.setUpdatedDate(comment.getUpdatedDate());
         return commentForm;

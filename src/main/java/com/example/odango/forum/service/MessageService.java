@@ -101,24 +101,28 @@ public class MessageService {
         return message;
     }
     /*レコード１件取得（削除用）*/
-    public MessageForm findMessage(Integer id){
-        List<Message> message = messageRepository.findMessage(id);
-        if(message.isEmpty()){
+    public UserMessageForm findMessage(Integer id){
+        List<UserMessage> result = userMessageRepository.selectById(id);
+        if(result.isEmpty()){
             return null;
         }
-        return setMessageForm(message.get(0));
+        return setMessageForm(result.get(0));
     }
     /*取得したEntityをFormに詰め替え*/
-    private MessageForm setMessageForm(Message message) {
-        MessageForm messageForm = new MessageForm();
-        messageForm.setId(message.getId());
-        messageForm.setTitle(message.getTitle());
-        messageForm.setText(message.getText());
-        messageForm.setCategory(message.getCategory());
-        messageForm.setUserId(message.getUserId());
-        messageForm.setCreatedDate(message.getCreatedDate());
-        messageForm.setUpdatedDate(message.getUpdatedDate());
-        return messageForm;
+    private UserMessageForm setMessageForm(UserMessage result) {
+        UserMessageForm message = new UserMessageForm();
+        message.setId(result.getId());
+        message.setAccount(result.getAccount());
+        message.setName(result.getName());
+        message.setBranchId(result.getBranchId());
+        message.setDepartmentId(result.getDepartmentId());
+        message.setUserId(result.getUserId());
+        message.setTitle(result.getTitle());
+        message.setText(result.getText());
+        message.setCategory(result.getCategory());
+        message.setCreatedDate(result.getCreatedDate());
+        message.setUpdatedDate(result.getUpdatedDate());
+        return message;
     }
     /*削除処理*/
     public void delete(Integer id){
