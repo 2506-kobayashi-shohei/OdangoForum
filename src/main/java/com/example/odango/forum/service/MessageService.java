@@ -79,7 +79,9 @@ public class MessageService {
         LocalDateTime now = LocalDateTime.now();
 
         for (UserMessageForm message : messages) {
-            Duration duration = Duration.between(message.getCreatedDate(), now);
+            LocalDateTime target = message.getCreatedDate();
+
+            Duration duration = Duration.between(target, now);
             long diff = duration.getSeconds();
 
             if (diff < 60){
@@ -89,7 +91,21 @@ public class MessageService {
             }else if(diff < 86400){
                 message.setStrCreatedDate((diff / 3600) + "時間前");
             }else {
-                message.setStrCreatedDate((diff / 86400) + "日前");
+                int diffMonth = (((now.getYear() - target.getYear()) * 12) + now.getMonthValue()) - target.getMonthValue();
+
+                if(diffMonth >= 13){
+                    message.setStrCreatedDate((now.getYear() - target.getYear()) + "年前");
+                }else if(now.getYear() != target.getYear() & now.getMonthValue() == target.getMonthValue()) {
+                    message.setStrCreatedDate("12ヵ月前");
+                }else {
+                    int diffDay = now.getDayOfYear() - target.getDayOfYear();
+
+                    if (diffDay >= 31){
+                        message.setStrCreatedDate((now.getMonthValue() - target.getMonthValue()) + "ヵ月前");
+                    }else {
+                        message.setStrCreatedDate((now.getDayOfYear() - target.getDayOfYear()) + "日前");
+                    }
+                }
             }
 
             processing.add(message);
