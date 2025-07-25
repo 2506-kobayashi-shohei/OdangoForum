@@ -13,16 +13,28 @@ body {
 	height: 100%;
 	width: 80%;
 }
+.users{
+    background-color: #e5e5e5;
+}
 
 .footer-contents {
 	margin-left: 20px;
 }
-
+.user-icon{
+    background-color: #f6f6f6;
+    border-width:5px;
+    border-color: white;
+    border-style: solid none none none;
+}
 .account{
     width:15%;
     display:inline-block;
     margin-top:5px;
     margin-bottom:5px;
+    margin-left:10px;
+    border-width:3px;
+    border-color: #666;
+    border-style: none dotted none none;
     overflow-wrap: break-word;
 }
 
@@ -31,7 +43,11 @@ body {
     display:inline-block;
     margin-top:5px;
     margin-bottom:5px;
+    margin-left:10px;
     overflow-wrap: break-word;
+    border-width:3px;
+    border-color: #666;
+    border-style: none dotted none none;
 }
 
 .branch{
@@ -39,6 +55,10 @@ body {
     display:inline-block;
     margin-top:5px;
     margin-bottom:5px;
+    margin-left:10px;
+    border-width:3px;
+    border-color: #666;
+    border-style: none dotted none none;
 }
 
 .is-stopped{
@@ -46,6 +66,10 @@ body {
     display:inline-block;
     margin-top:5px;
     margin-bottom:5px;
+    margin-left:10px;
+    border-width:3px;
+    border-color: #666;
+    border-style: none dotted none none;
 }
 
 .department{
@@ -53,10 +77,15 @@ body {
     display:inline-block;
     margin-top:5px;
     margin-bottom:5px;
+    margin-left:10px;
+    border-width:3px;
+    border-color: #666;
+    border-style: none dotted none none;
 }
 
 .login-user-status {
     font-size:14px;
+    margin-left:5px;
 }
 
 .edit-button{
@@ -65,7 +94,7 @@ body {
     margin-top:5px;
     margin-bottom:5px;
     margin-right:10px;
-    margin-left:5px;
+    margin-left:15px;
 }
 
 .Columns{

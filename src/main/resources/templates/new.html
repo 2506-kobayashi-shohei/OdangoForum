@@ -15,7 +15,7 @@
     </div>
     <form method="post" action="/Forum/add" th:object="${formModel}">
         <div class="form-area">
-            <label>タイトル</label></br>
+            <label>件名</label></br>
             <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"></div>
             <div th:if="${#fields.hasErrors('titleBlank')}" th:errors="*{titleBlank}" class="error"></div>
             <input type="text" class="title-box" th:field="*{title}"><br/>

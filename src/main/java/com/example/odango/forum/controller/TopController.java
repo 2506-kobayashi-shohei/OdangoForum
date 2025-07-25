@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,9 +57,11 @@ public class TopController {
         mav.addObject("comments", comments);
         mav.addObject("commentForm", commentForm);
         mav.addObject("button", button);
+        mav.addObject("messageIds", getMessageIds(comments));
         setErrorMessage(mav);
         return mav;
     }
+
     /* 管理者権限フィルターのエラーメッセージ取得 */
     private void setErrorMessage(ModelAndView mav) {
         if (session.getAttribute("errorMessages") != null) {
@@ -66,6 +69,14 @@ public class TopController {
             // sessionの破棄
             session.removeAttribute("errorMessages");
         }
+    }
+
+    private List<Integer> getMessageIds(List<UserCommentForm> comments) {
+        List<Integer> commentIds = new ArrayList<>();
+        for (UserCommentForm comment : comments) {
+            commentIds.add(comment.getMessageId());
+        }
+        return commentIds;
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)

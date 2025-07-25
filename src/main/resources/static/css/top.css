@@ -102,6 +102,9 @@ pre {
 }
 
 .comments{
+    border-width:5px;
+	border-color: white;
+	border-style: solid none none solid;
     width: 95%;
     margin: 0 0 0 auto;
 }
@@ -153,4 +156,11 @@ h1 {
 h3 {
     color: #36b38b;
     margin: 7px 0;
+}
+.comment-header{
+    width: 95%;
+    margin: 0 0 0 auto;
+    color: #36b38b;
+    font-family: sans-serif;
+    font-weight: bold;
 }
