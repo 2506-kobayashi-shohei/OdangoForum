@@ -31,6 +31,7 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         boolean button = false; // ボタン表示フラグ
         UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        boolean authority = false;
 
         // ログインユーザ情報チェック
         if (loginUser.getDepartmentId() == 1) {

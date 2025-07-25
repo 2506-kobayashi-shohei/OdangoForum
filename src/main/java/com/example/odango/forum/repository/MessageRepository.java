@@ -7,9 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface MessageRepository {
-    @Select("SELECT * FROM messages WHERE id = #{id}")
-    List<Message> findMessage(Integer id);
-
     @Insert("INSERT INTO messages (title, text, category, user_id)" +
             "VALUES (#{title}, #{text}, #{category}, #{userId})")
     void insert(Message message);

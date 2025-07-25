@@ -16,7 +16,4 @@ public interface CommentRepository {
 
     @Delete("DELETE FROM comments WHERE id = #{id};")
     void delete(Integer id);
-
-    @Select("SELECT * FROM comments WHERE id = #{id}")
-    List<Comment> findComment(Integer id);
 }

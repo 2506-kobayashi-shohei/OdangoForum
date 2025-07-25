@@ -1,6 +1,7 @@
 package com.example.odango.forum.controller;
 
 import com.example.odango.forum.controller.form.CommentForm;
+import com.example.odango.forum.controller.form.UserCommentForm;
 import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.service.CommentService;
 import io.micrometer.common.util.StringUtils;
@@ -65,10 +66,14 @@ public class CommentController {
             return mav;
         }
 
-        CommentForm comment = commentService.findComment(id);
+        UserCommentForm comment = commentService.findComment(id);
         UserForm user = (UserForm) session.getAttribute("loginUser");
 
-        if(comment == null || user.getId() != comment.getUserId()){
+        if(comment == null ||
+                !(user.getId() == comment.getUserId() || user.getDepartmentId() == 2
+                        || (user.getBranchId() == comment.getBranchId()
+                        && user.getDepartmentId() == 3 && comment.getDepartmentId() == 4)
+                )){
             mav.addObject("errorMessages", "不正なパラメータが入力されました");
             mav.setViewName("redirect:/Forum");
             return mav;

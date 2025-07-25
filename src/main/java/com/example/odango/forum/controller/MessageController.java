@@ -2,6 +2,7 @@ package com.example.odango.forum.controller;
 
 import com.example.odango.forum.controller.form.MessageForm;
 import com.example.odango.forum.controller.form.UserForm;
+import com.example.odango.forum.controller.form.UserMessageForm;
 import com.example.odango.forum.service.MessageService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpSession;
@@ -31,11 +32,12 @@ public class MessageController {
         mav.addObject("formModel", messageForm);
         return mav;
     }
+
     /*新規投稿登録処理*/
     @PostMapping("/Forum/add")
     public ModelAndView addMessage(@Validated @ModelAttribute("formModel") MessageForm messageForm,
                                    BindingResult result) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return new ModelAndView("/new");
         }
         UserForm user = (UserForm) session.getAttribute("loginUser");
@@ -44,21 +46,26 @@ public class MessageController {
         // rootへリダイレクト
         return new ModelAndView("redirect:/Forum");
     }
+
     /*削除処理*/
     @DeleteMapping("/Forum/deleteMessage/{id}")
-    public ModelAndView deleteMessage(@PathVariable Integer id){
+    public ModelAndView deleteMessage(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView();
         String strId = String.valueOf(id);
-        
-        if(StringUtils.isBlank(strId) || !strId.matches("^[0-9]+$")){
+
+        if (StringUtils.isBlank(strId) || !strId.matches("^[0-9]+$")) {
             mav.addObject("errorMessages", "不正なパラメータが入力されました");
             mav.setViewName("redirect:/Forum");
             return mav;
         }
 
-        MessageForm message = messageService.findMessage(id);
+        UserMessageForm message = messageService.findMessage(id);
         UserForm user = (UserForm) session.getAttribute("loginUser");
-        if(message == null || user.getId() != message.getUserId()){
+        if (message == null ||
+                !(user.getId() == message.getUserId() || user.getDepartmentId() == 2
+                        || (user.getBranchId() == message.getBranchId()
+                        && user.getDepartmentId() == 3 && message.getDepartmentId() == 4)
+                )) {
             mav.addObject("errorMessages", "不正なパラメータが入力されました");
             mav.setViewName("redirect:/Forum");
             return mav;
