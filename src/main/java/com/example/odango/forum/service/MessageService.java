@@ -1,18 +1,16 @@
 package com.example.odango.forum.service;
 
 import com.example.odango.forum.controller.form.MessageForm;
-import com.example.odango.forum.controller.form.UserForm;
 import com.example.odango.forum.controller.form.UserMessageForm;
 import com.example.odango.forum.repository.Entity.Message;
-import com.example.odango.forum.repository.Entity.User;
 import com.example.odango.forum.repository.MessageRepository;
 import com.example.odango.forum.repository.UserMessageRepository;
 import com.example.odango.forum.repository.Entity.UserMessage;
-import com.example.odango.forum.repository.UserMessageRepository;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -73,6 +71,30 @@ public class MessageService {
             messages.add(message);
         }
         return  messages;
+    }
+
+    // 表示用作成日設定処理
+    public List<UserMessageForm> dateTimeFormatter(List<UserMessageForm> messages){
+        List<UserMessageForm> processing = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (UserMessageForm message : messages) {
+            Duration duration = Duration.between(message.getCreatedDate(), now);
+            long diff = duration.getSeconds();
+
+            if (diff < 60){
+                message.setStrCreatedDate("たったいま");
+            }else if(diff < 3600){
+                message.setStrCreatedDate((diff / 60) + "分前");
+            }else if(diff < 86400){
+                message.setStrCreatedDate((diff / 3600) + "時間前");
+            }else {
+                message.setStrCreatedDate((diff / 86400) + "日前");
+            }
+
+            processing.add(message);
+        }
+        return  processing;
     }
 
     /*

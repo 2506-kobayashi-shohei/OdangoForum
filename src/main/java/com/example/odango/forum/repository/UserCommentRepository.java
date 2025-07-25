@@ -1,6 +1,5 @@
 package com.example.odango.forum.repository;
 
-import com.example.odango.forum.controller.form.UserCommentForm;
 import com.example.odango.forum.repository.Entity.UserComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
