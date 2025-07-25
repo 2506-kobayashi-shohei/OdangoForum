@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class SignUpController {
     @Autowired
@@ -38,14 +40,18 @@ public class SignUpController {
                         @ModelAttribute("formModel") UserForm userForm,
                         BindingResult result) {
         ModelAndView mav = new ModelAndView();
-        if (!StringUtils.isBlank(userForm.getAccount())) {
-            if (!userService.isUsersEmpty(userForm.getAccount())) {
-                FieldError notAccountUnique = new FieldError(result.getObjectName(), "account",
+        /*アカウント重複チェック*/
+        String account = userForm.getAccount();
+        if (!StringUtils.isBlank(account)) {
+            if (!userService.isUsersEmpty(account)) {
+                FieldError notAccountUnique = new FieldError(result.getObjectName(), "account", account, false, null, null,
                         "アカウントが重複しています");
                 result.addError(notAccountUnique);
             }
         }
+        /*アカウント重複チェック（ここまで）*/
         if (result.hasErrors()) {
+            mav.addObject("formModel", userForm);
             mav.setViewName("/signUp");
             return mav;
         }
