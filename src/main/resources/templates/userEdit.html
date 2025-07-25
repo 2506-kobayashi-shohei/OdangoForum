@@ -24,7 +24,7 @@
             <label>パスワード</label>
             <input type="password" th:field="*{password}"/></textarea><br/>
 
-            <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="errorMessages"></div>
+            <div th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}" class="errorMessages"></div>
             <label>パスワード（確認用）</label>
             <input type="password" th:field="*{confirmPassword}"><br/>
 
