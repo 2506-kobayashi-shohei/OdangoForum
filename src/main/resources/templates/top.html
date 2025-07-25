@@ -50,7 +50,7 @@
         </div>
         <div class="message-profile">
             カテゴリー：<span th:text="${message.category}"></span>
-            投稿日時：<span th:text="${#temporals.format(message.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            投稿日時：<span th:text="${message.strCreatedDate}"></span>
             投稿者：<span th:text="${message.name}"></span>
         </div>
 
