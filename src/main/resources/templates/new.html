@@ -15,18 +15,18 @@
     </div>
     <form method="post" action="/Forum/add" th:object="${formModel}">
         <div class="form-area">
-            <label>タイトル</label>
-            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"></span>
-            <span th:if="${#fields.hasErrors('titleBlank')}" th:errors="*{titleBlank}" class="error"></span>
-            <input type="text" th:field="*{title}"><br/>
+            <label>タイトル</label></br>
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"></div>
+            <div th:if="${#fields.hasErrors('titleBlank')}" th:errors="*{titleBlank}" class="error"></div>
+            <input type="text" class="title-box" th:field="*{title}"><br/>
             <label>本文</label></br>
-            <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error"></span>
-            <span th:if="${#fields.hasErrors('textBlank')}" th:errors="*{textBlank}" class="error"></span>
+            <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error"></div>
+            <div th:if="${#fields.hasErrors('textBlank')}" th:errors="*{textBlank}" class="error"></div>
             <textarea class="tweet-box" th:field="*{text}" size="20" /></textarea><br/>
-            <label>カテゴリ</label>
-            <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error"></span>
-            <span th:if="${#fields.hasErrors('categoryBlank')}" th:errors="*{categoryBlank}" class="error"></span>
-            <input type="text" th:field="*{category}"><br/>
+            <label>カテゴリ</label></br>
+            <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error"></div>
+            <div th:if="${#fields.hasErrors('categoryBlank')}" th:errors="*{categoryBlank}" class="error"></div>
+            <input type="text" class="category-box" th:field="*{category}"><br/>
             <input type="submit" value="投稿" />
         </div>
     </form>
