@@ -22,7 +22,7 @@
             <label>本文</label></br>
             <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error"></span>
             <span th:if="${#fields.hasErrors('textBlank')}" th:errors="*{textBlank}" class="error"></span>
-            <textarea class="tweet-box" th:field="*{text}" size="20" maxlength="200" /></textarea><br/>
+            <textarea class="tweet-box" th:field="*{text}" size="20" /></textarea><br/>
             <label>カテゴリ</label>
             <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error"></span>
             <span th:if="${#fields.hasErrors('categoryBlank')}" th:errors="*{categoryBlank}" class="error"></span>
