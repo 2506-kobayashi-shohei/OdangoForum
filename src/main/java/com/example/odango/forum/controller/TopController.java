@@ -8,10 +8,11 @@ import com.example.odango.forum.service.CommentService;
 import com.example.odango.forum.service.MessageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -66,4 +67,12 @@ public class TopController {
         }
     }
 
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+//    @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleError() {
+        session.invalidate();
+        session.setAttribute("errorMessages", "不正なパラメータを検知しました");
+        return new ModelAndView("forward:/Forum/login");
+    }
 }

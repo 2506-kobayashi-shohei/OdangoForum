@@ -29,7 +29,7 @@
                 <div class="name">名前</div>
                 <div class="branch">支社名</div>
                 <div class="department">部署名</div>
-                <div class="is-stopped">ユーザー停止状態</div>
+                <div class="is-stopped">停止状態変更</div>
             </div>
 
             <div class="user-icon" th:each="user : ${users}">
@@ -51,15 +51,14 @@
 
                 <div class="is-stopped" th:if="${loginUser.id} != ${user.id}">
                     <form th:action="@{/Forum/changeStatus/{id}(id=${user.id})}" th:method="put">
-                        <select name="status">
-                            <option  th:each="map : ${changeStatus}"
-                                     th:value="${map.key}"
-                                     th:text="${map.value}"
-                                     th:selected="${map.key == user.isStopped}">
-                            </option>
-                        </select>
-                        <input type="hidden" name="userId" th:value="${user.id}">
-                        <input class="change" type="submit" value="変更"/>
+                        <div class="is-stopped-true" th:if="${user.isStopped}">
+                            <input class="change" type="submit" value="停止" />
+                            <input type="hidden" name="status" value="false" />
+                        </div>
+                        <div class="is-stopped-false" th:unless="${user.isStopped}">
+                            <input class="change" type="submit" value="復活" />
+                            <input type="hidden" name="status" value="true" />
+                        </div>
                     </form>
                 </div>
 
